@@ -1,0 +1,7 @@
+{
+    "ignore": "node_modules",
+    "watch": ["./"],
+    "exec": "npm start",
+    "ext": "ts",
+    "legacyWatch":true
+}
