@@ -1,2 +1,0 @@
-docker run --name nodejs -p 3070:3070 -it -v C:\Applications\GitHub\Case5:/home/Case5 node:latest bash
-docker run -it -p 3070:3070 --name=node_api node-rest-api-webpack
