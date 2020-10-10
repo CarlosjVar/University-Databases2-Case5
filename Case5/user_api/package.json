@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/tedious": "^4.0.1",
     "express": "^4.17.1",
+    "prisma": "^1.34.10",
     "tedious": "^9.2.1"
   },
   "devDependencies": {
