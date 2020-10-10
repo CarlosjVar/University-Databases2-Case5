@@ -1,12 +1,11 @@
 
 import { Tedis, TedisPool } from "tedis";
 
-const pool = new TedisPool({
+
+const tedis = new Tedis({
     port: 6379,
     host: "25.10.118.245"
-});
-
-const tedis =  pool.getTedis();
+  });
 
 export default tedis; 
 

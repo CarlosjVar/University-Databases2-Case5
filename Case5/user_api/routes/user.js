@@ -63,7 +63,7 @@ app.post('/user', function (req, res) {
     users.push(req.body);
     res.json(users);
 });
-app.get('/test', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/ctest', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
@@ -72,6 +72,17 @@ app.get('/test', function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, cache_1["default"]];
             case 1:
                 _b.apply(_a, [(_c.sent()).get("hola")]);
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.get('/itest', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, cache_1["default"]];
+            case 1:
+                (_a.sent()).set("hola", "mundo");
+                res.send("enviado");
                 return [2 /*return*/];
         }
     });

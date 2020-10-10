@@ -33,8 +33,14 @@ app.post('/user', (req, res) => {
   res.json(users);
 });
 
-app.get('/test', async (req, res) => {
+app.get('/ctest', async (req, res) => {
   res.send((await tedis).get("hola"));
+  }
+);
+
+app.get('/itest', async (req, res) => {
+    (await tedis).set("hola", "mundo");
+    res.send("enviado");
 });
 
 export default app;

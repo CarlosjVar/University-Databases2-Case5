@@ -1,11 +1,10 @@
 "use strict";
 exports.__esModule = true;
 var tedis_1 = require("tedis");
-var pool = new tedis_1.TedisPool({
+var tedis = new tedis_1.Tedis({
     port: 6379,
     host: "25.10.118.245"
 });
-var tedis = pool.getTedis();
 exports["default"] = tedis;
 /*
 const redisClient = redis.createClient(6379, process.env.REDIS_SERVER)
