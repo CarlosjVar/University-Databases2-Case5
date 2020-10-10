@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Logger } from '../logger/logger';
 import User from './user';
+import Db from './db'
 
 class Routes {
 
@@ -28,6 +29,8 @@ class Routes {
 
         // user route
         this.express.use('/user', User);
+        this.express.use('/db',Db)
+
     }
 }
 

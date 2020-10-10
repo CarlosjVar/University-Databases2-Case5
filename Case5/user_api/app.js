@@ -4,7 +4,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger_1 = require("./logger/logger");
 var routes_1 = require("./routes/routes");
-//Server name DESKTOP-UEA05EJ
 var App = /** @class */ (function () {
     function App() {
         this.express = express();
