@@ -34,12 +34,12 @@ app.post('/user', (req, res) => {
 });
 
 app.get('/ctest', async (req, res) => {
-  res.send((await tedis).get("hola"));
+    console.log((await tedis).get("pepito"));
   }
 );
 
 app.get('/itest', async (req, res) => {
-    (await tedis).set("hola", "mundo");
+    (await tedis).set("pepito", "pepote");
     res.send("enviado");
 });
 
