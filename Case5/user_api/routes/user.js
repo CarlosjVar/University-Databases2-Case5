@@ -64,16 +64,24 @@ app.post('/user', function (req, res) {
     res.json(users);
 });
 app.get('/ctest', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
-            case 0:
-                _b = (_a = console).log;
-                return [4 /*yield*/, cache_1["default"]];
-            case 1:
-                _b.apply(_a, [(_c.sent()).get("pepito")]);
-                return [2 /*return*/];
-        }
+    var nom, nombre;
+    return __generator(this, function (_a) {
+        nom = "pepito";
+        nombre = function (nom) {
+            return __awaiter(this, void 0, void 0, function () {
+                var respuesta;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, cache_1["default"]];
+                        case 1:
+                            respuesta = (_a.sent()).get("pepito");
+                            return [2 /*return*/, respuesta];
+                    }
+                });
+            });
+        };
+        nombre("pepito").then(function (val) { return res.send(val); });
+        return [2 /*return*/];
     });
 }); });
 app.get('/itest', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -81,7 +89,7 @@ app.get('/itest', function (req, res) { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0: return [4 /*yield*/, cache_1["default"]];
             case 1:
-                (_a.sent()).set("pepito", "pepote");
+                (_a.sent()).set("hola", "mundo");
                 res.send("enviado");
                 return [2 /*return*/];
         }
