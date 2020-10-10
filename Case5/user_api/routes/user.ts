@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Logger } from '../logger/logger';
+import tedis from '../cache';
 
 const logger = new Logger()
 
@@ -30,6 +31,10 @@ app.get('/users/:userName', (req, res) => {
 app.post('/user', (req, res) => {
   users.push(req.body);
   res.json(users);
+});
+
+app.get('/test', async (req, res) => {
+  res.send((await tedis).get("hola"));
 });
 
 export default app;
