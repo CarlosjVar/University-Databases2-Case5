@@ -2,7 +2,8 @@ import * as express from 'express';
 import { Logger } from '../logger/logger';
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request
-var TYPES = require('tedious').TYPES;
+var TYPES= require('tedious').TYPES;
+import client from '../elasticConnection';
 // db setup
 var config = {
     server: 'host.docker.internal',
@@ -28,6 +29,7 @@ var connection = new Connection(config)
 const app = express();
 const logger = new Logger()
 
+// prueba
 app.use('/getHashtag',(req,res,next)=>{
     logger.info('databases route');
     connection.on('connect', function(err) {
@@ -39,6 +41,32 @@ app.use('/getHashtag',(req,res,next)=>{
     var result = executeStatement();
     res.send("hagamos la morición");
 })
+
+
+// Prueba conexión elastic
+app.use('/elastictest',((req, res, next) => {
+
+    client.search({
+        index:'palabras'
+    },(error,response,status) =>
+    {
+        if(error){
+            logger.error(error)
+        }
+        else
+        {
+            console.log("--- Response ---");
+            console.log(response);
+            console.log("--- Hits ---");
+            response.hits.hits.forEach(function(hit){
+                console.log(hit);})
+        }
+    }
+    )
+}))
+
+
+
 function executeStatement() {
     var request = new Request("SELECT * from Hashtags", (err,rowCount,rows)=> {
         if (err) {

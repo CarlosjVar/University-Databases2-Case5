@@ -16,7 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/tedious": "^4.0.1",
+    "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
+    "get-json": "^1.0.1",
     "prisma": "^1.34.10",
     "tedious": "^9.2.1"
   },
