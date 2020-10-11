@@ -118,3 +118,4 @@ dist
 .pnp.*
 
 node_modules/
+Case5/commands.txt

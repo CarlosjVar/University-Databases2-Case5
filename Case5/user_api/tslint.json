@@ -4,7 +4,7 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": { "no-console": false, "no-empty":false, "only-arrow-functions":false, "prefer-const": false},
+    "rules": { "no-console": false, "no-empty":false, "only-arrow-functions":false, "prefer-const": false , "no-var-keyword": false,"no-var-requires": false},
     "rulesDirectory": [],
     "linterOptions": { "exclude": ["node_modules"] }
 }
