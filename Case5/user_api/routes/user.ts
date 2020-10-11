@@ -33,15 +33,14 @@ app.post('/user', (req, res) => {
   res.json(users);
 });
 
-app.get('/ctest', async (req, res) => {
+app.get('/ctest/:level', async (req, res) => {
 
-  var nom = "pepito";
-  var nombre = async function(nom){
-     var respuesta = (await tedis).get("pepito");
+  var nombre = async function(){
+     var respuesta = (await tedis).get(`${req.params.level}`);
      return respuesta;
   
   }
-  nombre("pepito").then(val=>res.send(val))
+  nombre().then(val=>res.send(val))
   }
 );
 

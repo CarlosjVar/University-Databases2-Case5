@@ -63,24 +63,23 @@ app.post('/user', function (req, res) {
     users.push(req.body);
     res.json(users);
 });
-app.get('/ctest', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var nom, nombre;
+app.get('/ctest/:level', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var nombre;
     return __generator(this, function (_a) {
-        nom = "pepito";
-        nombre = function (nom) {
+        nombre = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var respuesta;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, cache_1["default"]];
                         case 1:
-                            respuesta = (_a.sent()).get("pepito");
+                            respuesta = (_a.sent()).get("" + req.params.level);
                             return [2 /*return*/, respuesta];
                     }
                 });
             });
         };
-        nombre("pepito").then(function (val) { return res.send(val); });
+        nombre().then(function (val) { return res.send(val); });
         return [2 /*return*/];
     });
 }); });
