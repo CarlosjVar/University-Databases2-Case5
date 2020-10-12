@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tedis": "^0.1.12"
+    "tedis": "^0.1.12",
     "@types/tedious": "^4.0.1",
     "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
