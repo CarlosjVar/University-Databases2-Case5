@@ -59,7 +59,8 @@ app.use('/elastictest',((req, res, next) => {
             console.log(response);
             console.log("--- Hits ---");
             response.hits.hits.forEach(function(hit){
-                console.log(hit);})
+                console.log(hit);
+            })
         }
     }
     )

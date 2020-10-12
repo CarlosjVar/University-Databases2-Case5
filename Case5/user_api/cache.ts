@@ -1,7 +1,7 @@
 
 import { Tedis, TedisPool } from "tedis";
 
-class Cache {
+export class Cache {
   private static instance: Cache;
   public tedisCache : Tedis;
 
