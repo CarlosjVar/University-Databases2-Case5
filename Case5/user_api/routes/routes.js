@@ -3,7 +3,7 @@ exports.__esModule = true;
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger_1 = require("../logger/logger");
-var user_1 = require("./user");
+var levels_1 = require("./levels");
 var Routes = /** @class */ (function () {
     function Routes() {
         this.express = express();
@@ -18,7 +18,7 @@ var Routes = /** @class */ (function () {
     };
     Routes.prototype.routes = function () {
         // user route
-        this.express.use('/user', user_1["default"]);
+        this.express.use('/levels', levels_1["default"]);
     };
     return Routes;
 }());
