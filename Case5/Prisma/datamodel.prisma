@@ -1,4 +1,32 @@
-type User {
+type Article {
   id: ID! @id
   name: String!
+  author: String
+  postTime: DateTime
+  Titles: [Title] @relation(link: INLINE)
+  Subtitles:[Subtitle] @relation(link: INLINE)
+  Media:[Media] @relation(link: INLINE)
+
 }
+type Title
+{
+  id: ID! @id
+  title: String
+  text: String
+  posicion: Int
+}
+type Subtitle
+{
+  id: ID! @id
+  subtitle: String
+  text: String
+  posicion: Int
+
+}
+type Media
+{
+    id: ID! @id
+    url: String
+    posicion: Int
+}
+

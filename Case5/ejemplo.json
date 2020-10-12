@@ -1,0 +1,48 @@
+{
+    "Name" :"Las aventuras de un computin",
+    "autor": "Un computin",
+    "Sections":[
+                {"Title":"Titulo 1",
+                "text":"El nacimiento de un computin",
+                "images":[
+                        {"image":"Imagen 1"}
+                         ],
+                "subtitles":[
+                        {"Subtitle":"Subtitulo 1",
+                        "text":"El nace",
+                        "images":[
+                                {"image":"Imagen_sub 1"}
+                                ]
+                        },
+                        {"Subtitle":"Subtitulo 1",
+                            "text":"El nace",
+                            "images":[
+                                    {"image":"Imagen_sub 1"}
+                                    ]
+                            }
+
+                ]
+                },
+                {"Title":"Titulo 2",
+                    "text":"El fallecimiento de un computin",
+                    "images":[
+                            {"image":"Imagen 1"}
+                             ],
+                    "subtitles":[
+                            {"Subtitle":"Subtitulo 1",
+                            "text":"El fallece",
+                            "images":[
+                                    {"image":"Imagen_sub 1"}
+                                    ]
+                            },
+                            {"Subtitle":"Subtitulo 1",
+                                "text":"El fallece again",
+                                "images":[
+                                        {"image":"Imagen_sub 1"}
+                                        ]
+                                }
+    
+                    ]
+                    }
+            ]
+}
