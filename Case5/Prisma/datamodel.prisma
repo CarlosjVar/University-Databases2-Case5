@@ -1,32 +1,30 @@
-type Article {
+type Article @db(name: "Articles") {
   id: ID! @id
-  name: String!
-  author: String
-  postTime: DateTime
-  Titles: [Title] @relation(link: INLINE)
-  Subtitles:[Subtitle] @relation(link: INLINE)
-  Media:[Media] @relation(link: INLINE)
-
-}
-type Title
-{
-  id: ID! @id
-  title: String
-  text: String
-  posicion: Int
-}
-type Subtitle
-{
-  id: ID! @id
-  subtitle: String
-  text: String
-  posicion: Int
-
-}
-type Media
-{
-    id: ID! @id
-    url: String
-    posicion: Int
+  author: String @db(name: "Author")
+  media: [ArticleMedia] 
+  name: String @db(name: "Name")
+  postTime: String @db(name: "PostTime")
+  subtitles: [ArticleSubtitle] 
+  texts: [ArticleText] 
+  titles: [ArticleTitle] 
 }
 
+type ArticleMedia @embedded {
+  position: Int @db(name: "Position:")
+  url: String
+}
+
+type ArticleSubtitle @embedded {
+  position: Int @db(name: "Position:")
+  subitle: String @db(name: "Subitle")
+}
+
+type ArticleText @embedded {
+  position: Int @db(name: "Position:")
+  text: String @db(name: "Text")
+}
+
+type ArticleTitle @embedded {
+  position: Int @db(name: "Position:")
+  title: String @db(name: "Title")
+}

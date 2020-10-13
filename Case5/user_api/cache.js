@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.Cache = void 0;
 var tedis_1 = require("tedis");
 var Cache = /** @class */ (function () {
     function Cache() {
@@ -75,4 +76,5 @@ var Cache = /** @class */ (function () {
     };
     return Cache;
 }());
+exports.Cache = Cache;
 exports["default"] = Cache;

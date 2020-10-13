@@ -6,26 +6,15 @@ export const typeDefs = /* GraphQL */ `type AggregateArticle {
   count: Int!
 }
 
-type AggregateMedia {
-  count: Int!
-}
-
-type AggregateSubtitle {
-  count: Int!
-}
-
-type AggregateTitle {
-  count: Int!
-}
-
 type Article {
   id: ID!
-  name: String!
   author: String
-  postTime: DateTime
-  Titles(where: TitleWhereInput, orderBy: TitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Title!]
-  Subtitles(where: SubtitleWhereInput, orderBy: SubtitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subtitle!]
-  Media(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Media!]
+  media: [ArticleMedia!]
+  name: String
+  postTime: String
+  subtitles: [ArticleSubtitle!]
+  texts: [ArticleText!]
+  titles: [ArticleTitle!]
 }
 
 type ArticleConnection {
@@ -36,12 +25,13 @@ type ArticleConnection {
 
 input ArticleCreateInput {
   id: ID
-  name: String!
   author: String
-  postTime: DateTime
-  Titles: TitleCreateManyInput
-  Subtitles: SubtitleCreateManyInput
-  Media: MediaCreateManyInput
+  media: ArticleMediaCreateManyInput
+  name: String
+  postTime: String
+  subtitles: ArticleSubtitleCreateManyInput
+  texts: ArticleTextCreateManyInput
+  titles: ArticleTitleCreateManyInput
 }
 
 type ArticleEdge {
@@ -49,22 +39,132 @@ type ArticleEdge {
   cursor: String!
 }
 
+type ArticleMedia {
+  position: Int
+  url: String
+}
+
+input ArticleMediaCreateInput {
+  position: Int
+  url: String
+}
+
+input ArticleMediaCreateManyInput {
+  create: [ArticleMediaCreateInput!]
+}
+
+input ArticleMediaRestrictedWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [ArticleMediaRestrictedWhereInput!]
+}
+
+input ArticleMediaScalarWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [ArticleMediaScalarWhereInput!]
+  OR: [ArticleMediaScalarWhereInput!]
+  NOT: [ArticleMediaScalarWhereInput!]
+}
+
+input ArticleMediaUpdateManyDataInput {
+  position: Int
+  url: String
+}
+
+input ArticleMediaUpdateManyInput {
+  create: [ArticleMediaCreateInput!]
+  deleteMany: [ArticleMediaScalarWhereInput!]
+  updateMany: [ArticleMediaUpdateManyWithWhereNestedInput!]
+}
+
+input ArticleMediaUpdateManyWithWhereNestedInput {
+  where: ArticleMediaScalarWhereInput!
+  data: ArticleMediaUpdateManyDataInput!
+}
+
+input ArticleMediaWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [ArticleMediaWhereInput!]
+}
+
 enum ArticleOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
   author_ASC
   author_DESC
+  name_ASC
+  name_DESC
   postTime_ASC
   postTime_DESC
 }
 
 type ArticlePreviousValues {
   id: ID!
-  name: String!
   author: String
-  postTime: DateTime
+  name: String
+  postTime: String
 }
 
 type ArticleSubscriptionPayload {
@@ -83,19 +183,350 @@ input ArticleSubscriptionWhereInput {
   AND: [ArticleSubscriptionWhereInput!]
 }
 
+type ArticleSubtitle {
+  position: Int
+  subitle: String
+}
+
+input ArticleSubtitleCreateInput {
+  position: Int
+  subitle: String
+}
+
+input ArticleSubtitleCreateManyInput {
+  create: [ArticleSubtitleCreateInput!]
+}
+
+input ArticleSubtitleRestrictedWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  subitle: String
+  subitle_not: String
+  subitle_in: [String!]
+  subitle_not_in: [String!]
+  subitle_lt: String
+  subitle_lte: String
+  subitle_gt: String
+  subitle_gte: String
+  subitle_contains: String
+  subitle_not_contains: String
+  subitle_starts_with: String
+  subitle_not_starts_with: String
+  subitle_ends_with: String
+  subitle_not_ends_with: String
+  AND: [ArticleSubtitleRestrictedWhereInput!]
+}
+
+input ArticleSubtitleScalarWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  subitle: String
+  subitle_not: String
+  subitle_in: [String!]
+  subitle_not_in: [String!]
+  subitle_lt: String
+  subitle_lte: String
+  subitle_gt: String
+  subitle_gte: String
+  subitle_contains: String
+  subitle_not_contains: String
+  subitle_starts_with: String
+  subitle_not_starts_with: String
+  subitle_ends_with: String
+  subitle_not_ends_with: String
+  AND: [ArticleSubtitleScalarWhereInput!]
+  OR: [ArticleSubtitleScalarWhereInput!]
+  NOT: [ArticleSubtitleScalarWhereInput!]
+}
+
+input ArticleSubtitleUpdateManyDataInput {
+  position: Int
+  subitle: String
+}
+
+input ArticleSubtitleUpdateManyInput {
+  create: [ArticleSubtitleCreateInput!]
+  deleteMany: [ArticleSubtitleScalarWhereInput!]
+  updateMany: [ArticleSubtitleUpdateManyWithWhereNestedInput!]
+}
+
+input ArticleSubtitleUpdateManyWithWhereNestedInput {
+  where: ArticleSubtitleScalarWhereInput!
+  data: ArticleSubtitleUpdateManyDataInput!
+}
+
+input ArticleSubtitleWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  subitle: String
+  subitle_not: String
+  subitle_in: [String!]
+  subitle_not_in: [String!]
+  subitle_lt: String
+  subitle_lte: String
+  subitle_gt: String
+  subitle_gte: String
+  subitle_contains: String
+  subitle_not_contains: String
+  subitle_starts_with: String
+  subitle_not_starts_with: String
+  subitle_ends_with: String
+  subitle_not_ends_with: String
+  AND: [ArticleSubtitleWhereInput!]
+}
+
+type ArticleText {
+  position: Int
+  text: String
+}
+
+input ArticleTextCreateInput {
+  position: Int
+  text: String
+}
+
+input ArticleTextCreateManyInput {
+  create: [ArticleTextCreateInput!]
+}
+
+input ArticleTextRestrictedWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [ArticleTextRestrictedWhereInput!]
+}
+
+input ArticleTextScalarWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [ArticleTextScalarWhereInput!]
+  OR: [ArticleTextScalarWhereInput!]
+  NOT: [ArticleTextScalarWhereInput!]
+}
+
+input ArticleTextUpdateManyDataInput {
+  position: Int
+  text: String
+}
+
+input ArticleTextUpdateManyInput {
+  create: [ArticleTextCreateInput!]
+  deleteMany: [ArticleTextScalarWhereInput!]
+  updateMany: [ArticleTextUpdateManyWithWhereNestedInput!]
+}
+
+input ArticleTextUpdateManyWithWhereNestedInput {
+  where: ArticleTextScalarWhereInput!
+  data: ArticleTextUpdateManyDataInput!
+}
+
+input ArticleTextWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [ArticleTextWhereInput!]
+}
+
+type ArticleTitle {
+  position: Int
+  title: String
+}
+
+input ArticleTitleCreateInput {
+  position: Int
+  title: String
+}
+
+input ArticleTitleCreateManyInput {
+  create: [ArticleTitleCreateInput!]
+}
+
+input ArticleTitleRestrictedWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ArticleTitleRestrictedWhereInput!]
+}
+
+input ArticleTitleScalarWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ArticleTitleScalarWhereInput!]
+  OR: [ArticleTitleScalarWhereInput!]
+  NOT: [ArticleTitleScalarWhereInput!]
+}
+
+input ArticleTitleUpdateManyDataInput {
+  position: Int
+  title: String
+}
+
+input ArticleTitleUpdateManyInput {
+  create: [ArticleTitleCreateInput!]
+  deleteMany: [ArticleTitleScalarWhereInput!]
+  updateMany: [ArticleTitleUpdateManyWithWhereNestedInput!]
+}
+
+input ArticleTitleUpdateManyWithWhereNestedInput {
+  where: ArticleTitleScalarWhereInput!
+  data: ArticleTitleUpdateManyDataInput!
+}
+
+input ArticleTitleWhereInput {
+  position: Int
+  position_not: Int
+  position_in: [Int!]
+  position_not_in: [Int!]
+  position_lt: Int
+  position_lte: Int
+  position_gt: Int
+  position_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [ArticleTitleWhereInput!]
+}
+
 input ArticleUpdateInput {
-  name: String
   author: String
-  postTime: DateTime
-  Titles: TitleUpdateManyInput
-  Subtitles: SubtitleUpdateManyInput
-  Media: MediaUpdateManyInput
+  media: ArticleMediaUpdateManyInput
+  name: String
+  postTime: String
+  subtitles: ArticleSubtitleUpdateManyInput
+  texts: ArticleTextUpdateManyInput
+  titles: ArticleTitleUpdateManyInput
 }
 
 input ArticleUpdateManyMutationInput {
-  name: String
   author: String
-  postTime: DateTime
+  name: String
+  postTime: String
 }
 
 input ArticleWhereInput {
@@ -113,20 +544,6 @@ input ArticleWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
   author: String
   author_not: String
   author_in: [String!]
@@ -141,17 +558,46 @@ input ArticleWhereInput {
   author_not_starts_with: String
   author_ends_with: String
   author_not_ends_with: String
-  postTime: DateTime
-  postTime_not: DateTime
-  postTime_in: [DateTime!]
-  postTime_not_in: [DateTime!]
-  postTime_lt: DateTime
-  postTime_lte: DateTime
-  postTime_gt: DateTime
-  postTime_gte: DateTime
-  Titles_some: TitleWhereInput
-  Subtitles_some: SubtitleWhereInput
-  Media_some: MediaWhereInput
+  media_some: ArticleMediaWhereInput
+  media_every: ArticleMediaRestrictedWhereInput
+  media_none: ArticleMediaRestrictedWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  postTime: String
+  postTime_not: String
+  postTime_in: [String!]
+  postTime_not_in: [String!]
+  postTime_lt: String
+  postTime_lte: String
+  postTime_gt: String
+  postTime_gte: String
+  postTime_contains: String
+  postTime_not_contains: String
+  postTime_starts_with: String
+  postTime_not_starts_with: String
+  postTime_ends_with: String
+  postTime_not_ends_with: String
+  subtitles_some: ArticleSubtitleWhereInput
+  subtitles_every: ArticleSubtitleRestrictedWhereInput
+  subtitles_none: ArticleSubtitleRestrictedWhereInput
+  texts_some: ArticleTextWhereInput
+  texts_every: ArticleTextRestrictedWhereInput
+  texts_none: ArticleTextRestrictedWhereInput
+  titles_some: ArticleTitleWhereInput
+  titles_every: ArticleTitleRestrictedWhereInput
+  titles_none: ArticleTitleRestrictedWhereInput
   AND: [ArticleWhereInput!]
 }
 
@@ -163,202 +609,7 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
 scalar Long
-
-type Media {
-  id: ID!
-  url: String
-  posicion: Int
-}
-
-type MediaConnection {
-  pageInfo: PageInfo!
-  edges: [MediaEdge]!
-  aggregate: AggregateMedia!
-}
-
-input MediaCreateInput {
-  id: ID
-  url: String
-  posicion: Int
-}
-
-input MediaCreateManyInput {
-  create: [MediaCreateInput!]
-  connect: [MediaWhereUniqueInput!]
-}
-
-type MediaEdge {
-  node: Media!
-  cursor: String!
-}
-
-enum MediaOrderByInput {
-  id_ASC
-  id_DESC
-  url_ASC
-  url_DESC
-  posicion_ASC
-  posicion_DESC
-}
-
-type MediaPreviousValues {
-  id: ID!
-  url: String
-  posicion: Int
-}
-
-input MediaScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [MediaScalarWhereInput!]
-  OR: [MediaScalarWhereInput!]
-  NOT: [MediaScalarWhereInput!]
-}
-
-type MediaSubscriptionPayload {
-  mutation: MutationType!
-  node: Media
-  updatedFields: [String!]
-  previousValues: MediaPreviousValues
-}
-
-input MediaSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: MediaWhereInput
-  AND: [MediaSubscriptionWhereInput!]
-}
-
-input MediaUpdateDataInput {
-  url: String
-  posicion: Int
-}
-
-input MediaUpdateInput {
-  url: String
-  posicion: Int
-}
-
-input MediaUpdateManyDataInput {
-  url: String
-  posicion: Int
-}
-
-input MediaUpdateManyInput {
-  create: [MediaCreateInput!]
-  update: [MediaUpdateWithWhereUniqueNestedInput!]
-  upsert: [MediaUpsertWithWhereUniqueNestedInput!]
-  delete: [MediaWhereUniqueInput!]
-  connect: [MediaWhereUniqueInput!]
-  set: [MediaWhereUniqueInput!]
-  disconnect: [MediaWhereUniqueInput!]
-  deleteMany: [MediaScalarWhereInput!]
-  updateMany: [MediaUpdateManyWithWhereNestedInput!]
-}
-
-input MediaUpdateManyMutationInput {
-  url: String
-  posicion: Int
-}
-
-input MediaUpdateManyWithWhereNestedInput {
-  where: MediaScalarWhereInput!
-  data: MediaUpdateManyDataInput!
-}
-
-input MediaUpdateWithWhereUniqueNestedInput {
-  where: MediaWhereUniqueInput!
-  data: MediaUpdateDataInput!
-}
-
-input MediaUpsertWithWhereUniqueNestedInput {
-  where: MediaWhereUniqueInput!
-  update: MediaUpdateDataInput!
-  create: MediaCreateInput!
-}
-
-input MediaWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [MediaWhereInput!]
-}
-
-input MediaWhereUniqueInput {
-  id: ID
-}
 
 type Mutation {
   createArticle(data: ArticleCreateInput!): Article!
@@ -367,24 +618,6 @@ type Mutation {
   upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   deleteArticle(where: ArticleWhereUniqueInput!): Article
   deleteManyArticles(where: ArticleWhereInput): BatchPayload!
-  createMedia(data: MediaCreateInput!): Media!
-  updateMedia(data: MediaUpdateInput!, where: MediaWhereUniqueInput!): Media
-  updateManyMedias(data: MediaUpdateManyMutationInput!, where: MediaWhereInput): BatchPayload!
-  upsertMedia(where: MediaWhereUniqueInput!, create: MediaCreateInput!, update: MediaUpdateInput!): Media!
-  deleteMedia(where: MediaWhereUniqueInput!): Media
-  deleteManyMedias(where: MediaWhereInput): BatchPayload!
-  createSubtitle(data: SubtitleCreateInput!): Subtitle!
-  updateSubtitle(data: SubtitleUpdateInput!, where: SubtitleWhereUniqueInput!): Subtitle
-  updateManySubtitles(data: SubtitleUpdateManyMutationInput!, where: SubtitleWhereInput): BatchPayload!
-  upsertSubtitle(where: SubtitleWhereUniqueInput!, create: SubtitleCreateInput!, update: SubtitleUpdateInput!): Subtitle!
-  deleteSubtitle(where: SubtitleWhereUniqueInput!): Subtitle
-  deleteManySubtitles(where: SubtitleWhereInput): BatchPayload!
-  createTitle(data: TitleCreateInput!): Title!
-  updateTitle(data: TitleUpdateInput!, where: TitleWhereUniqueInput!): Title
-  updateManyTitles(data: TitleUpdateManyMutationInput!, where: TitleWhereInput): BatchPayload!
-  upsertTitle(where: TitleWhereUniqueInput!, create: TitleCreateInput!, update: TitleUpdateInput!): Title!
-  deleteTitle(where: TitleWhereUniqueInput!): Title
-  deleteManyTitles(where: TitleWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -408,482 +641,10 @@ type Query {
   article(where: ArticleWhereUniqueInput!): Article
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
-  media(where: MediaWhereUniqueInput!): Media
-  medias(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Media]!
-  mediasConnection(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MediaConnection!
-  subtitle(where: SubtitleWhereUniqueInput!): Subtitle
-  subtitles(where: SubtitleWhereInput, orderBy: SubtitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Subtitle]!
-  subtitlesConnection(where: SubtitleWhereInput, orderBy: SubtitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubtitleConnection!
-  title(where: TitleWhereUniqueInput!): Title
-  titles(where: TitleWhereInput, orderBy: TitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Title]!
-  titlesConnection(where: TitleWhereInput, orderBy: TitleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TitleConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
   article(where: ArticleSubscriptionWhereInput): ArticleSubscriptionPayload
-  media(where: MediaSubscriptionWhereInput): MediaSubscriptionPayload
-  subtitle(where: SubtitleSubscriptionWhereInput): SubtitleSubscriptionPayload
-  title(where: TitleSubscriptionWhereInput): TitleSubscriptionPayload
-}
-
-type Subtitle {
-  id: ID!
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-type SubtitleConnection {
-  pageInfo: PageInfo!
-  edges: [SubtitleEdge]!
-  aggregate: AggregateSubtitle!
-}
-
-input SubtitleCreateInput {
-  id: ID
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleCreateManyInput {
-  create: [SubtitleCreateInput!]
-  connect: [SubtitleWhereUniqueInput!]
-}
-
-type SubtitleEdge {
-  node: Subtitle!
-  cursor: String!
-}
-
-enum SubtitleOrderByInput {
-  id_ASC
-  id_DESC
-  subtitle_ASC
-  subtitle_DESC
-  text_ASC
-  text_DESC
-  posicion_ASC
-  posicion_DESC
-}
-
-type SubtitlePreviousValues {
-  id: ID!
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  subtitle: String
-  subtitle_not: String
-  subtitle_in: [String!]
-  subtitle_not_in: [String!]
-  subtitle_lt: String
-  subtitle_lte: String
-  subtitle_gt: String
-  subtitle_gte: String
-  subtitle_contains: String
-  subtitle_not_contains: String
-  subtitle_starts_with: String
-  subtitle_not_starts_with: String
-  subtitle_ends_with: String
-  subtitle_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [SubtitleScalarWhereInput!]
-  OR: [SubtitleScalarWhereInput!]
-  NOT: [SubtitleScalarWhereInput!]
-}
-
-type SubtitleSubscriptionPayload {
-  mutation: MutationType!
-  node: Subtitle
-  updatedFields: [String!]
-  previousValues: SubtitlePreviousValues
-}
-
-input SubtitleSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: SubtitleWhereInput
-  AND: [SubtitleSubscriptionWhereInput!]
-}
-
-input SubtitleUpdateDataInput {
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleUpdateInput {
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleUpdateManyDataInput {
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleUpdateManyInput {
-  create: [SubtitleCreateInput!]
-  update: [SubtitleUpdateWithWhereUniqueNestedInput!]
-  upsert: [SubtitleUpsertWithWhereUniqueNestedInput!]
-  delete: [SubtitleWhereUniqueInput!]
-  connect: [SubtitleWhereUniqueInput!]
-  set: [SubtitleWhereUniqueInput!]
-  disconnect: [SubtitleWhereUniqueInput!]
-  deleteMany: [SubtitleScalarWhereInput!]
-  updateMany: [SubtitleUpdateManyWithWhereNestedInput!]
-}
-
-input SubtitleUpdateManyMutationInput {
-  subtitle: String
-  text: String
-  posicion: Int
-}
-
-input SubtitleUpdateManyWithWhereNestedInput {
-  where: SubtitleScalarWhereInput!
-  data: SubtitleUpdateManyDataInput!
-}
-
-input SubtitleUpdateWithWhereUniqueNestedInput {
-  where: SubtitleWhereUniqueInput!
-  data: SubtitleUpdateDataInput!
-}
-
-input SubtitleUpsertWithWhereUniqueNestedInput {
-  where: SubtitleWhereUniqueInput!
-  update: SubtitleUpdateDataInput!
-  create: SubtitleCreateInput!
-}
-
-input SubtitleWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  subtitle: String
-  subtitle_not: String
-  subtitle_in: [String!]
-  subtitle_not_in: [String!]
-  subtitle_lt: String
-  subtitle_lte: String
-  subtitle_gt: String
-  subtitle_gte: String
-  subtitle_contains: String
-  subtitle_not_contains: String
-  subtitle_starts_with: String
-  subtitle_not_starts_with: String
-  subtitle_ends_with: String
-  subtitle_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [SubtitleWhereInput!]
-}
-
-input SubtitleWhereUniqueInput {
-  id: ID
-}
-
-type Title {
-  id: ID!
-  title: String
-  text: String
-  posicion: Int
-}
-
-type TitleConnection {
-  pageInfo: PageInfo!
-  edges: [TitleEdge]!
-  aggregate: AggregateTitle!
-}
-
-input TitleCreateInput {
-  id: ID
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleCreateManyInput {
-  create: [TitleCreateInput!]
-  connect: [TitleWhereUniqueInput!]
-}
-
-type TitleEdge {
-  node: Title!
-  cursor: String!
-}
-
-enum TitleOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  text_ASC
-  text_DESC
-  posicion_ASC
-  posicion_DESC
-}
-
-type TitlePreviousValues {
-  id: ID!
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [TitleScalarWhereInput!]
-  OR: [TitleScalarWhereInput!]
-  NOT: [TitleScalarWhereInput!]
-}
-
-type TitleSubscriptionPayload {
-  mutation: MutationType!
-  node: Title
-  updatedFields: [String!]
-  previousValues: TitlePreviousValues
-}
-
-input TitleSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: TitleWhereInput
-  AND: [TitleSubscriptionWhereInput!]
-}
-
-input TitleUpdateDataInput {
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleUpdateInput {
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleUpdateManyDataInput {
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleUpdateManyInput {
-  create: [TitleCreateInput!]
-  update: [TitleUpdateWithWhereUniqueNestedInput!]
-  upsert: [TitleUpsertWithWhereUniqueNestedInput!]
-  delete: [TitleWhereUniqueInput!]
-  connect: [TitleWhereUniqueInput!]
-  set: [TitleWhereUniqueInput!]
-  disconnect: [TitleWhereUniqueInput!]
-  deleteMany: [TitleScalarWhereInput!]
-  updateMany: [TitleUpdateManyWithWhereNestedInput!]
-}
-
-input TitleUpdateManyMutationInput {
-  title: String
-  text: String
-  posicion: Int
-}
-
-input TitleUpdateManyWithWhereNestedInput {
-  where: TitleScalarWhereInput!
-  data: TitleUpdateManyDataInput!
-}
-
-input TitleUpdateWithWhereUniqueNestedInput {
-  where: TitleWhereUniqueInput!
-  data: TitleUpdateDataInput!
-}
-
-input TitleUpsertWithWhereUniqueNestedInput {
-  where: TitleWhereUniqueInput!
-  update: TitleUpdateDataInput!
-  create: TitleCreateInput!
-}
-
-input TitleWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  posicion: Int
-  posicion_not: Int
-  posicion_in: [Int!]
-  posicion_not_in: [Int!]
-  posicion_lt: Int
-  posicion_lte: Int
-  posicion_gt: Int
-  posicion_gte: Int
-  AND: [TitleWhereInput!]
-}
-
-input TitleWhereUniqueInput {
-  id: ID
 }
 `

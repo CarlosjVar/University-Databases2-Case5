@@ -17,9 +17,6 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   article: (where?: ArticleWhereInput) => Promise<boolean>;
-  media: (where?: MediaWhereInput) => Promise<boolean>;
-  subtitle: (where?: SubtitleWhereInput) => Promise<boolean>;
-  title: (where?: TitleWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -60,63 +57,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ArticleConnectionPromise;
-  media: (where: MediaWhereUniqueInput) => MediaNullablePromise;
-  medias: (args?: {
-    where?: MediaWhereInput;
-    orderBy?: MediaOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Media>;
-  mediasConnection: (args?: {
-    where?: MediaWhereInput;
-    orderBy?: MediaOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => MediaConnectionPromise;
-  subtitle: (where: SubtitleWhereUniqueInput) => SubtitleNullablePromise;
-  subtitles: (args?: {
-    where?: SubtitleWhereInput;
-    orderBy?: SubtitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Subtitle>;
-  subtitlesConnection: (args?: {
-    where?: SubtitleWhereInput;
-    orderBy?: SubtitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => SubtitleConnectionPromise;
-  title: (where: TitleWhereUniqueInput) => TitleNullablePromise;
-  titles: (args?: {
-    where?: TitleWhereInput;
-    orderBy?: TitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Title>;
-  titlesConnection: (args?: {
-    where?: TitleWhereInput;
-    orderBy?: TitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => TitleConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -139,54 +79,6 @@ export interface Prisma {
   }) => ArticlePromise;
   deleteArticle: (where: ArticleWhereUniqueInput) => ArticlePromise;
   deleteManyArticles: (where?: ArticleWhereInput) => BatchPayloadPromise;
-  createMedia: (data: MediaCreateInput) => MediaPromise;
-  updateMedia: (args: {
-    data: MediaUpdateInput;
-    where: MediaWhereUniqueInput;
-  }) => MediaPromise;
-  updateManyMedias: (args: {
-    data: MediaUpdateManyMutationInput;
-    where?: MediaWhereInput;
-  }) => BatchPayloadPromise;
-  upsertMedia: (args: {
-    where: MediaWhereUniqueInput;
-    create: MediaCreateInput;
-    update: MediaUpdateInput;
-  }) => MediaPromise;
-  deleteMedia: (where: MediaWhereUniqueInput) => MediaPromise;
-  deleteManyMedias: (where?: MediaWhereInput) => BatchPayloadPromise;
-  createSubtitle: (data: SubtitleCreateInput) => SubtitlePromise;
-  updateSubtitle: (args: {
-    data: SubtitleUpdateInput;
-    where: SubtitleWhereUniqueInput;
-  }) => SubtitlePromise;
-  updateManySubtitles: (args: {
-    data: SubtitleUpdateManyMutationInput;
-    where?: SubtitleWhereInput;
-  }) => BatchPayloadPromise;
-  upsertSubtitle: (args: {
-    where: SubtitleWhereUniqueInput;
-    create: SubtitleCreateInput;
-    update: SubtitleUpdateInput;
-  }) => SubtitlePromise;
-  deleteSubtitle: (where: SubtitleWhereUniqueInput) => SubtitlePromise;
-  deleteManySubtitles: (where?: SubtitleWhereInput) => BatchPayloadPromise;
-  createTitle: (data: TitleCreateInput) => TitlePromise;
-  updateTitle: (args: {
-    data: TitleUpdateInput;
-    where: TitleWhereUniqueInput;
-  }) => TitlePromise;
-  updateManyTitles: (args: {
-    data: TitleUpdateManyMutationInput;
-    where?: TitleWhereInput;
-  }) => BatchPayloadPromise;
-  upsertTitle: (args: {
-    where: TitleWhereUniqueInput;
-    create: TitleCreateInput;
-    update: TitleUpdateInput;
-  }) => TitlePromise;
-  deleteTitle: (where: TitleWhereUniqueInput) => TitlePromise;
-  deleteManyTitles: (where?: TitleWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -199,15 +91,6 @@ export interface Subscription {
   article: (
     where?: ArticleSubscriptionWhereInput
   ) => ArticleSubscriptionPayloadSubscription;
-  media: (
-    where?: MediaSubscriptionWhereInput
-  ) => MediaSubscriptionPayloadSubscription;
-  subtitle: (
-    where?: SubtitleSubscriptionWhereInput
-  ) => SubtitleSubscriptionPayloadSubscription;
-  title: (
-    where?: TitleSubscriptionWhereInput
-  ) => TitleSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -218,41 +101,13 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type TitleOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "text_ASC"
-  | "text_DESC"
-  | "posicion_ASC"
-  | "posicion_DESC";
-
-export type SubtitleOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "subtitle_ASC"
-  | "subtitle_DESC"
-  | "text_ASC"
-  | "text_DESC"
-  | "posicion_ASC"
-  | "posicion_DESC";
-
-export type MediaOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "url_ASC"
-  | "url_DESC"
-  | "posicion_ASC"
-  | "posicion_DESC";
-
 export type ArticleOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "author_ASC"
   | "author_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "postTime_ASC"
   | "postTime_DESC";
 
@@ -261,154 +116,6 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export type ArticleWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface TitleWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<TitleWhereInput[] | TitleWhereInput>;
-}
-
-export interface SubtitleWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  subtitle?: Maybe<String>;
-  subtitle_not?: Maybe<String>;
-  subtitle_in?: Maybe<String[] | String>;
-  subtitle_not_in?: Maybe<String[] | String>;
-  subtitle_lt?: Maybe<String>;
-  subtitle_lte?: Maybe<String>;
-  subtitle_gt?: Maybe<String>;
-  subtitle_gte?: Maybe<String>;
-  subtitle_contains?: Maybe<String>;
-  subtitle_not_contains?: Maybe<String>;
-  subtitle_starts_with?: Maybe<String>;
-  subtitle_not_starts_with?: Maybe<String>;
-  subtitle_ends_with?: Maybe<String>;
-  subtitle_not_ends_with?: Maybe<String>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<SubtitleWhereInput[] | SubtitleWhereInput>;
-}
-
-export interface MediaWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<MediaWhereInput[] | MediaWhereInput>;
-}
 
 export interface ArticleWhereInput {
   id?: Maybe<ID_Input>;
@@ -425,20 +132,6 @@ export interface ArticleWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   author?: Maybe<String>;
   author_not?: Maybe<String>;
   author_in?: Maybe<String[] | String>;
@@ -453,346 +146,58 @@ export interface ArticleWhereInput {
   author_not_starts_with?: Maybe<String>;
   author_ends_with?: Maybe<String>;
   author_not_ends_with?: Maybe<String>;
-  postTime?: Maybe<DateTimeInput>;
-  postTime_not?: Maybe<DateTimeInput>;
-  postTime_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  postTime_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  postTime_lt?: Maybe<DateTimeInput>;
-  postTime_lte?: Maybe<DateTimeInput>;
-  postTime_gt?: Maybe<DateTimeInput>;
-  postTime_gte?: Maybe<DateTimeInput>;
-  Titles_some?: Maybe<TitleWhereInput>;
-  Subtitles_some?: Maybe<SubtitleWhereInput>;
-  Media_some?: Maybe<MediaWhereInput>;
+  media_some?: Maybe<ArticleMediaWhereInput>;
+  media_every?: Maybe<ArticleMediaRestrictedWhereInput>;
+  media_none?: Maybe<ArticleMediaRestrictedWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  postTime?: Maybe<String>;
+  postTime_not?: Maybe<String>;
+  postTime_in?: Maybe<String[] | String>;
+  postTime_not_in?: Maybe<String[] | String>;
+  postTime_lt?: Maybe<String>;
+  postTime_lte?: Maybe<String>;
+  postTime_gt?: Maybe<String>;
+  postTime_gte?: Maybe<String>;
+  postTime_contains?: Maybe<String>;
+  postTime_not_contains?: Maybe<String>;
+  postTime_starts_with?: Maybe<String>;
+  postTime_not_starts_with?: Maybe<String>;
+  postTime_ends_with?: Maybe<String>;
+  postTime_not_ends_with?: Maybe<String>;
+  subtitles_some?: Maybe<ArticleSubtitleWhereInput>;
+  subtitles_every?: Maybe<ArticleSubtitleRestrictedWhereInput>;
+  subtitles_none?: Maybe<ArticleSubtitleRestrictedWhereInput>;
+  texts_some?: Maybe<ArticleTextWhereInput>;
+  texts_every?: Maybe<ArticleTextRestrictedWhereInput>;
+  texts_none?: Maybe<ArticleTextRestrictedWhereInput>;
+  titles_some?: Maybe<ArticleTitleWhereInput>;
+  titles_every?: Maybe<ArticleTitleRestrictedWhereInput>;
+  titles_none?: Maybe<ArticleTitleRestrictedWhereInput>;
   AND?: Maybe<ArticleWhereInput[] | ArticleWhereInput>;
 }
 
-export type MediaWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type SubtitleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type TitleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ArticleCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  author?: Maybe<String>;
-  postTime?: Maybe<DateTimeInput>;
-  Titles?: Maybe<TitleCreateManyInput>;
-  Subtitles?: Maybe<SubtitleCreateManyInput>;
-  Media?: Maybe<MediaCreateManyInput>;
-}
-
-export interface TitleCreateManyInput {
-  create?: Maybe<TitleCreateInput[] | TitleCreateInput>;
-  connect?: Maybe<TitleWhereUniqueInput[] | TitleWhereUniqueInput>;
-}
-
-export interface TitleCreateInput {
-  id?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface SubtitleCreateManyInput {
-  create?: Maybe<SubtitleCreateInput[] | SubtitleCreateInput>;
-  connect?: Maybe<SubtitleWhereUniqueInput[] | SubtitleWhereUniqueInput>;
-}
-
-export interface SubtitleCreateInput {
-  id?: Maybe<ID_Input>;
-  subtitle?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface MediaCreateManyInput {
-  create?: Maybe<MediaCreateInput[] | MediaCreateInput>;
-  connect?: Maybe<MediaWhereUniqueInput[] | MediaWhereUniqueInput>;
-}
-
-export interface MediaCreateInput {
-  id?: Maybe<ID_Input>;
-  url?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface ArticleUpdateInput {
-  name?: Maybe<String>;
-  author?: Maybe<String>;
-  postTime?: Maybe<DateTimeInput>;
-  Titles?: Maybe<TitleUpdateManyInput>;
-  Subtitles?: Maybe<SubtitleUpdateManyInput>;
-  Media?: Maybe<MediaUpdateManyInput>;
-}
-
-export interface TitleUpdateManyInput {
-  create?: Maybe<TitleCreateInput[] | TitleCreateInput>;
-  update?: Maybe<
-    | TitleUpdateWithWhereUniqueNestedInput[]
-    | TitleUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | TitleUpsertWithWhereUniqueNestedInput[]
-    | TitleUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<TitleWhereUniqueInput[] | TitleWhereUniqueInput>;
-  connect?: Maybe<TitleWhereUniqueInput[] | TitleWhereUniqueInput>;
-  set?: Maybe<TitleWhereUniqueInput[] | TitleWhereUniqueInput>;
-  disconnect?: Maybe<TitleWhereUniqueInput[] | TitleWhereUniqueInput>;
-  deleteMany?: Maybe<TitleScalarWhereInput[] | TitleScalarWhereInput>;
-  updateMany?: Maybe<
-    TitleUpdateManyWithWhereNestedInput[] | TitleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TitleUpdateWithWhereUniqueNestedInput {
-  where: TitleWhereUniqueInput;
-  data: TitleUpdateDataInput;
-}
-
-export interface TitleUpdateDataInput {
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface TitleUpsertWithWhereUniqueNestedInput {
-  where: TitleWhereUniqueInput;
-  update: TitleUpdateDataInput;
-  create: TitleCreateInput;
-}
-
-export interface TitleScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<TitleScalarWhereInput[] | TitleScalarWhereInput>;
-  OR?: Maybe<TitleScalarWhereInput[] | TitleScalarWhereInput>;
-  NOT?: Maybe<TitleScalarWhereInput[] | TitleScalarWhereInput>;
-}
-
-export interface TitleUpdateManyWithWhereNestedInput {
-  where: TitleScalarWhereInput;
-  data: TitleUpdateManyDataInput;
-}
-
-export interface TitleUpdateManyDataInput {
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface SubtitleUpdateManyInput {
-  create?: Maybe<SubtitleCreateInput[] | SubtitleCreateInput>;
-  update?: Maybe<
-    | SubtitleUpdateWithWhereUniqueNestedInput[]
-    | SubtitleUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | SubtitleUpsertWithWhereUniqueNestedInput[]
-    | SubtitleUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<SubtitleWhereUniqueInput[] | SubtitleWhereUniqueInput>;
-  connect?: Maybe<SubtitleWhereUniqueInput[] | SubtitleWhereUniqueInput>;
-  set?: Maybe<SubtitleWhereUniqueInput[] | SubtitleWhereUniqueInput>;
-  disconnect?: Maybe<SubtitleWhereUniqueInput[] | SubtitleWhereUniqueInput>;
-  deleteMany?: Maybe<SubtitleScalarWhereInput[] | SubtitleScalarWhereInput>;
-  updateMany?: Maybe<
-    | SubtitleUpdateManyWithWhereNestedInput[]
-    | SubtitleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SubtitleUpdateWithWhereUniqueNestedInput {
-  where: SubtitleWhereUniqueInput;
-  data: SubtitleUpdateDataInput;
-}
-
-export interface SubtitleUpdateDataInput {
-  subtitle?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface SubtitleUpsertWithWhereUniqueNestedInput {
-  where: SubtitleWhereUniqueInput;
-  update: SubtitleUpdateDataInput;
-  create: SubtitleCreateInput;
-}
-
-export interface SubtitleScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  subtitle?: Maybe<String>;
-  subtitle_not?: Maybe<String>;
-  subtitle_in?: Maybe<String[] | String>;
-  subtitle_not_in?: Maybe<String[] | String>;
-  subtitle_lt?: Maybe<String>;
-  subtitle_lte?: Maybe<String>;
-  subtitle_gt?: Maybe<String>;
-  subtitle_gte?: Maybe<String>;
-  subtitle_contains?: Maybe<String>;
-  subtitle_not_contains?: Maybe<String>;
-  subtitle_starts_with?: Maybe<String>;
-  subtitle_not_starts_with?: Maybe<String>;
-  subtitle_ends_with?: Maybe<String>;
-  subtitle_not_ends_with?: Maybe<String>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<SubtitleScalarWhereInput[] | SubtitleScalarWhereInput>;
-  OR?: Maybe<SubtitleScalarWhereInput[] | SubtitleScalarWhereInput>;
-  NOT?: Maybe<SubtitleScalarWhereInput[] | SubtitleScalarWhereInput>;
-}
-
-export interface SubtitleUpdateManyWithWhereNestedInput {
-  where: SubtitleScalarWhereInput;
-  data: SubtitleUpdateManyDataInput;
-}
-
-export interface SubtitleUpdateManyDataInput {
-  subtitle?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface MediaUpdateManyInput {
-  create?: Maybe<MediaCreateInput[] | MediaCreateInput>;
-  update?: Maybe<
-    | MediaUpdateWithWhereUniqueNestedInput[]
-    | MediaUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | MediaUpsertWithWhereUniqueNestedInput[]
-    | MediaUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<MediaWhereUniqueInput[] | MediaWhereUniqueInput>;
-  connect?: Maybe<MediaWhereUniqueInput[] | MediaWhereUniqueInput>;
-  set?: Maybe<MediaWhereUniqueInput[] | MediaWhereUniqueInput>;
-  disconnect?: Maybe<MediaWhereUniqueInput[] | MediaWhereUniqueInput>;
-  deleteMany?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
-  updateMany?: Maybe<
-    MediaUpdateManyWithWhereNestedInput[] | MediaUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface MediaUpdateWithWhereUniqueNestedInput {
-  where: MediaWhereUniqueInput;
-  data: MediaUpdateDataInput;
-}
-
-export interface MediaUpdateDataInput {
-  url?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface MediaUpsertWithWhereUniqueNestedInput {
-  where: MediaWhereUniqueInput;
-  update: MediaUpdateDataInput;
-  create: MediaCreateInput;
-}
-
-export interface MediaScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
+export interface ArticleMediaWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
   url?: Maybe<String>;
   url_not?: Maybe<String>;
   url_in?: Maybe<String[] | String>;
@@ -807,67 +212,462 @@ export interface MediaScalarWhereInput {
   url_not_starts_with?: Maybe<String>;
   url_ends_with?: Maybe<String>;
   url_not_ends_with?: Maybe<String>;
-  posicion?: Maybe<Int>;
-  posicion_not?: Maybe<Int>;
-  posicion_in?: Maybe<Int[] | Int>;
-  posicion_not_in?: Maybe<Int[] | Int>;
-  posicion_lt?: Maybe<Int>;
-  posicion_lte?: Maybe<Int>;
-  posicion_gt?: Maybe<Int>;
-  posicion_gte?: Maybe<Int>;
-  AND?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
-  OR?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
-  NOT?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
+  AND?: Maybe<ArticleMediaWhereInput[] | ArticleMediaWhereInput>;
 }
 
-export interface MediaUpdateManyWithWhereNestedInput {
-  where: MediaScalarWhereInput;
-  data: MediaUpdateManyDataInput;
-}
-
-export interface MediaUpdateManyDataInput {
+export interface ArticleMediaRestrictedWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
   url?: Maybe<String>;
-  posicion?: Maybe<Int>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    ArticleMediaRestrictedWhereInput[] | ArticleMediaRestrictedWhereInput
+  >;
+}
+
+export interface ArticleSubtitleWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  subitle?: Maybe<String>;
+  subitle_not?: Maybe<String>;
+  subitle_in?: Maybe<String[] | String>;
+  subitle_not_in?: Maybe<String[] | String>;
+  subitle_lt?: Maybe<String>;
+  subitle_lte?: Maybe<String>;
+  subitle_gt?: Maybe<String>;
+  subitle_gte?: Maybe<String>;
+  subitle_contains?: Maybe<String>;
+  subitle_not_contains?: Maybe<String>;
+  subitle_starts_with?: Maybe<String>;
+  subitle_not_starts_with?: Maybe<String>;
+  subitle_ends_with?: Maybe<String>;
+  subitle_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleSubtitleWhereInput[] | ArticleSubtitleWhereInput>;
+}
+
+export interface ArticleSubtitleRestrictedWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  subitle?: Maybe<String>;
+  subitle_not?: Maybe<String>;
+  subitle_in?: Maybe<String[] | String>;
+  subitle_not_in?: Maybe<String[] | String>;
+  subitle_lt?: Maybe<String>;
+  subitle_lte?: Maybe<String>;
+  subitle_gt?: Maybe<String>;
+  subitle_gte?: Maybe<String>;
+  subitle_contains?: Maybe<String>;
+  subitle_not_contains?: Maybe<String>;
+  subitle_starts_with?: Maybe<String>;
+  subitle_not_starts_with?: Maybe<String>;
+  subitle_ends_with?: Maybe<String>;
+  subitle_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    ArticleSubtitleRestrictedWhereInput[] | ArticleSubtitleRestrictedWhereInput
+  >;
+}
+
+export interface ArticleTextWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleTextWhereInput[] | ArticleTextWhereInput>;
+}
+
+export interface ArticleTextRestrictedWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    ArticleTextRestrictedWhereInput[] | ArticleTextRestrictedWhereInput
+  >;
+}
+
+export interface ArticleTitleWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleTitleWhereInput[] | ArticleTitleWhereInput>;
+}
+
+export interface ArticleTitleRestrictedWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    ArticleTitleRestrictedWhereInput[] | ArticleTitleRestrictedWhereInput
+  >;
+}
+
+export interface ArticleCreateInput {
+  id?: Maybe<ID_Input>;
+  author?: Maybe<String>;
+  media?: Maybe<ArticleMediaCreateManyInput>;
+  name?: Maybe<String>;
+  postTime?: Maybe<String>;
+  subtitles?: Maybe<ArticleSubtitleCreateManyInput>;
+  texts?: Maybe<ArticleTextCreateManyInput>;
+  titles?: Maybe<ArticleTitleCreateManyInput>;
+}
+
+export interface ArticleMediaCreateManyInput {
+  create?: Maybe<ArticleMediaCreateInput[] | ArticleMediaCreateInput>;
+}
+
+export interface ArticleMediaCreateInput {
+  position?: Maybe<Int>;
+  url?: Maybe<String>;
+}
+
+export interface ArticleSubtitleCreateManyInput {
+  create?: Maybe<ArticleSubtitleCreateInput[] | ArticleSubtitleCreateInput>;
+}
+
+export interface ArticleSubtitleCreateInput {
+  position?: Maybe<Int>;
+  subitle?: Maybe<String>;
+}
+
+export interface ArticleTextCreateManyInput {
+  create?: Maybe<ArticleTextCreateInput[] | ArticleTextCreateInput>;
+}
+
+export interface ArticleTextCreateInput {
+  position?: Maybe<Int>;
+  text?: Maybe<String>;
+}
+
+export interface ArticleTitleCreateManyInput {
+  create?: Maybe<ArticleTitleCreateInput[] | ArticleTitleCreateInput>;
+}
+
+export interface ArticleTitleCreateInput {
+  position?: Maybe<Int>;
+  title?: Maybe<String>;
+}
+
+export interface ArticleUpdateInput {
+  author?: Maybe<String>;
+  media?: Maybe<ArticleMediaUpdateManyInput>;
+  name?: Maybe<String>;
+  postTime?: Maybe<String>;
+  subtitles?: Maybe<ArticleSubtitleUpdateManyInput>;
+  texts?: Maybe<ArticleTextUpdateManyInput>;
+  titles?: Maybe<ArticleTitleUpdateManyInput>;
+}
+
+export interface ArticleMediaUpdateManyInput {
+  create?: Maybe<ArticleMediaCreateInput[] | ArticleMediaCreateInput>;
+  deleteMany?: Maybe<
+    ArticleMediaScalarWhereInput[] | ArticleMediaScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ArticleMediaUpdateManyWithWhereNestedInput[]
+    | ArticleMediaUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ArticleMediaScalarWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleMediaScalarWhereInput[] | ArticleMediaScalarWhereInput>;
+  OR?: Maybe<ArticleMediaScalarWhereInput[] | ArticleMediaScalarWhereInput>;
+  NOT?: Maybe<ArticleMediaScalarWhereInput[] | ArticleMediaScalarWhereInput>;
+}
+
+export interface ArticleMediaUpdateManyWithWhereNestedInput {
+  where: ArticleMediaScalarWhereInput;
+  data: ArticleMediaUpdateManyDataInput;
+}
+
+export interface ArticleMediaUpdateManyDataInput {
+  position?: Maybe<Int>;
+  url?: Maybe<String>;
+}
+
+export interface ArticleSubtitleUpdateManyInput {
+  create?: Maybe<ArticleSubtitleCreateInput[] | ArticleSubtitleCreateInput>;
+  deleteMany?: Maybe<
+    ArticleSubtitleScalarWhereInput[] | ArticleSubtitleScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ArticleSubtitleUpdateManyWithWhereNestedInput[]
+    | ArticleSubtitleUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ArticleSubtitleScalarWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  subitle?: Maybe<String>;
+  subitle_not?: Maybe<String>;
+  subitle_in?: Maybe<String[] | String>;
+  subitle_not_in?: Maybe<String[] | String>;
+  subitle_lt?: Maybe<String>;
+  subitle_lte?: Maybe<String>;
+  subitle_gt?: Maybe<String>;
+  subitle_gte?: Maybe<String>;
+  subitle_contains?: Maybe<String>;
+  subitle_not_contains?: Maybe<String>;
+  subitle_starts_with?: Maybe<String>;
+  subitle_not_starts_with?: Maybe<String>;
+  subitle_ends_with?: Maybe<String>;
+  subitle_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    ArticleSubtitleScalarWhereInput[] | ArticleSubtitleScalarWhereInput
+  >;
+  OR?: Maybe<
+    ArticleSubtitleScalarWhereInput[] | ArticleSubtitleScalarWhereInput
+  >;
+  NOT?: Maybe<
+    ArticleSubtitleScalarWhereInput[] | ArticleSubtitleScalarWhereInput
+  >;
+}
+
+export interface ArticleSubtitleUpdateManyWithWhereNestedInput {
+  where: ArticleSubtitleScalarWhereInput;
+  data: ArticleSubtitleUpdateManyDataInput;
+}
+
+export interface ArticleSubtitleUpdateManyDataInput {
+  position?: Maybe<Int>;
+  subitle?: Maybe<String>;
+}
+
+export interface ArticleTextUpdateManyInput {
+  create?: Maybe<ArticleTextCreateInput[] | ArticleTextCreateInput>;
+  deleteMany?: Maybe<
+    ArticleTextScalarWhereInput[] | ArticleTextScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ArticleTextUpdateManyWithWhereNestedInput[]
+    | ArticleTextUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ArticleTextScalarWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleTextScalarWhereInput[] | ArticleTextScalarWhereInput>;
+  OR?: Maybe<ArticleTextScalarWhereInput[] | ArticleTextScalarWhereInput>;
+  NOT?: Maybe<ArticleTextScalarWhereInput[] | ArticleTextScalarWhereInput>;
+}
+
+export interface ArticleTextUpdateManyWithWhereNestedInput {
+  where: ArticleTextScalarWhereInput;
+  data: ArticleTextUpdateManyDataInput;
+}
+
+export interface ArticleTextUpdateManyDataInput {
+  position?: Maybe<Int>;
+  text?: Maybe<String>;
+}
+
+export interface ArticleTitleUpdateManyInput {
+  create?: Maybe<ArticleTitleCreateInput[] | ArticleTitleCreateInput>;
+  deleteMany?: Maybe<
+    ArticleTitleScalarWhereInput[] | ArticleTitleScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ArticleTitleUpdateManyWithWhereNestedInput[]
+    | ArticleTitleUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ArticleTitleScalarWhereInput {
+  position?: Maybe<Int>;
+  position_not?: Maybe<Int>;
+  position_in?: Maybe<Int[] | Int>;
+  position_not_in?: Maybe<Int[] | Int>;
+  position_lt?: Maybe<Int>;
+  position_lte?: Maybe<Int>;
+  position_gt?: Maybe<Int>;
+  position_gte?: Maybe<Int>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArticleTitleScalarWhereInput[] | ArticleTitleScalarWhereInput>;
+  OR?: Maybe<ArticleTitleScalarWhereInput[] | ArticleTitleScalarWhereInput>;
+  NOT?: Maybe<ArticleTitleScalarWhereInput[] | ArticleTitleScalarWhereInput>;
+}
+
+export interface ArticleTitleUpdateManyWithWhereNestedInput {
+  where: ArticleTitleScalarWhereInput;
+  data: ArticleTitleUpdateManyDataInput;
+}
+
+export interface ArticleTitleUpdateManyDataInput {
+  position?: Maybe<Int>;
+  title?: Maybe<String>;
 }
 
 export interface ArticleUpdateManyMutationInput {
-  name?: Maybe<String>;
   author?: Maybe<String>;
-  postTime?: Maybe<DateTimeInput>;
-}
-
-export interface MediaUpdateInput {
-  url?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface MediaUpdateManyMutationInput {
-  url?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface SubtitleUpdateInput {
-  subtitle?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface SubtitleUpdateManyMutationInput {
-  subtitle?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface TitleUpdateInput {
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
-}
-
-export interface TitleUpdateManyMutationInput {
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  posicion?: Maybe<Int>;
+  name?: Maybe<String>;
+  postTime?: Maybe<String>;
 }
 
 export interface ArticleSubscriptionWhereInput {
@@ -879,242 +679,158 @@ export interface ArticleSubscriptionWhereInput {
   AND?: Maybe<ArticleSubscriptionWhereInput[] | ArticleSubscriptionWhereInput>;
 }
 
-export interface MediaSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MediaWhereInput>;
-  AND?: Maybe<MediaSubscriptionWhereInput[] | MediaSubscriptionWhereInput>;
-}
-
-export interface SubtitleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SubtitleWhereInput>;
-  AND?: Maybe<
-    SubtitleSubscriptionWhereInput[] | SubtitleSubscriptionWhereInput
-  >;
-}
-
-export interface TitleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TitleWhereInput>;
-  AND?: Maybe<TitleSubscriptionWhereInput[] | TitleSubscriptionWhereInput>;
-}
-
 export interface NodeNode {
   id: ID_Output;
 }
 
 export interface Article {
   id: ID_Output;
-  name: String;
   author?: String;
-  postTime?: DateTimeOutput;
+  media?: <T = FragmentableArray<ArticleMedia>>() => T;
+  name?: String;
+  postTime?: String;
+  subtitles?: <T = FragmentableArray<ArticleSubtitle>>() => T;
+  texts?: <T = FragmentableArray<ArticleText>>() => T;
+  titles?: <T = FragmentableArray<ArticleTitle>>() => T;
 }
 
 export interface ArticlePromise extends Promise<Article>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   author: () => Promise<String>;
-  postTime: () => Promise<DateTimeOutput>;
-  Titles: <T = FragmentableArray<Title>>(args?: {
-    where?: TitleWhereInput;
-    orderBy?: TitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Subtitles: <T = FragmentableArray<Subtitle>>(args?: {
-    where?: SubtitleWhereInput;
-    orderBy?: SubtitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Media: <T = FragmentableArray<Media>>(args?: {
-    where?: MediaWhereInput;
-    orderBy?: MediaOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  media: <T = FragmentableArray<ArticleMedia>>() => T;
+  name: () => Promise<String>;
+  postTime: () => Promise<String>;
+  subtitles: <T = FragmentableArray<ArticleSubtitle>>() => T;
+  texts: <T = FragmentableArray<ArticleText>>() => T;
+  titles: <T = FragmentableArray<ArticleTitle>>() => T;
 }
 
 export interface ArticleSubscription
   extends Promise<AsyncIterator<Article>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
-  postTime: () => Promise<AsyncIterator<DateTimeOutput>>;
-  Titles: <T = Promise<AsyncIterator<TitleSubscription>>>(args?: {
-    where?: TitleWhereInput;
-    orderBy?: TitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Subtitles: <T = Promise<AsyncIterator<SubtitleSubscription>>>(args?: {
-    where?: SubtitleWhereInput;
-    orderBy?: SubtitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Media: <T = Promise<AsyncIterator<MediaSubscription>>>(args?: {
-    where?: MediaWhereInput;
-    orderBy?: MediaOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  media: <T = Promise<AsyncIterator<ArticleMediaSubscription>>>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  postTime: () => Promise<AsyncIterator<String>>;
+  subtitles: <T = Promise<AsyncIterator<ArticleSubtitleSubscription>>>() => T;
+  texts: <T = Promise<AsyncIterator<ArticleTextSubscription>>>() => T;
+  titles: <T = Promise<AsyncIterator<ArticleTitleSubscription>>>() => T;
 }
 
 export interface ArticleNullablePromise
   extends Promise<Article | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   author: () => Promise<String>;
-  postTime: () => Promise<DateTimeOutput>;
-  Titles: <T = FragmentableArray<Title>>(args?: {
-    where?: TitleWhereInput;
-    orderBy?: TitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Subtitles: <T = FragmentableArray<Subtitle>>(args?: {
-    where?: SubtitleWhereInput;
-    orderBy?: SubtitleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  Media: <T = FragmentableArray<Media>>(args?: {
-    where?: MediaWhereInput;
-    orderBy?: MediaOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  media: <T = FragmentableArray<ArticleMedia>>() => T;
+  name: () => Promise<String>;
+  postTime: () => Promise<String>;
+  subtitles: <T = FragmentableArray<ArticleSubtitle>>() => T;
+  texts: <T = FragmentableArray<ArticleText>>() => T;
+  titles: <T = FragmentableArray<ArticleTitle>>() => T;
 }
 
-export interface Title {
-  id: ID_Output;
-  title?: String;
-  text?: String;
-  posicion?: Int;
-}
-
-export interface TitlePromise extends Promise<Title>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface TitleSubscription
-  extends Promise<AsyncIterator<Title>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TitleNullablePromise
-  extends Promise<Title | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface Subtitle {
-  id: ID_Output;
-  subtitle?: String;
-  text?: String;
-  posicion?: Int;
-}
-
-export interface SubtitlePromise extends Promise<Subtitle>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  subtitle: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface SubtitleSubscription
-  extends Promise<AsyncIterator<Subtitle>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  subtitle: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SubtitleNullablePromise
-  extends Promise<Subtitle | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  subtitle: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface Media {
-  id: ID_Output;
+export interface ArticleMedia {
+  position?: Int;
   url?: String;
-  posicion?: Int;
 }
 
-export interface MediaPromise extends Promise<Media>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  url: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface MediaSubscription
-  extends Promise<AsyncIterator<Media>>,
+export interface ArticleMediaPromise
+  extends Promise<ArticleMedia>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
+  position: () => Promise<Int>;
+  url: () => Promise<String>;
+}
+
+export interface ArticleMediaSubscription
+  extends Promise<AsyncIterator<ArticleMedia>>,
+    Fragmentable {
+  position: () => Promise<AsyncIterator<Int>>;
   url: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface MediaNullablePromise
-  extends Promise<Media | null>,
+export interface ArticleMediaNullablePromise
+  extends Promise<ArticleMedia | null>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
+  position: () => Promise<Int>;
   url: () => Promise<String>;
-  posicion: () => Promise<Int>;
+}
+
+export interface ArticleSubtitle {
+  position?: Int;
+  subitle?: String;
+}
+
+export interface ArticleSubtitlePromise
+  extends Promise<ArticleSubtitle>,
+    Fragmentable {
+  position: () => Promise<Int>;
+  subitle: () => Promise<String>;
+}
+
+export interface ArticleSubtitleSubscription
+  extends Promise<AsyncIterator<ArticleSubtitle>>,
+    Fragmentable {
+  position: () => Promise<AsyncIterator<Int>>;
+  subitle: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ArticleSubtitleNullablePromise
+  extends Promise<ArticleSubtitle | null>,
+    Fragmentable {
+  position: () => Promise<Int>;
+  subitle: () => Promise<String>;
+}
+
+export interface ArticleText {
+  position?: Int;
+  text?: String;
+}
+
+export interface ArticleTextPromise extends Promise<ArticleText>, Fragmentable {
+  position: () => Promise<Int>;
+  text: () => Promise<String>;
+}
+
+export interface ArticleTextSubscription
+  extends Promise<AsyncIterator<ArticleText>>,
+    Fragmentable {
+  position: () => Promise<AsyncIterator<Int>>;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ArticleTextNullablePromise
+  extends Promise<ArticleText | null>,
+    Fragmentable {
+  position: () => Promise<Int>;
+  text: () => Promise<String>;
+}
+
+export interface ArticleTitle {
+  position?: Int;
+  title?: String;
+}
+
+export interface ArticleTitlePromise
+  extends Promise<ArticleTitle>,
+    Fragmentable {
+  position: () => Promise<Int>;
+  title: () => Promise<String>;
+}
+
+export interface ArticleTitleSubscription
+  extends Promise<AsyncIterator<ArticleTitle>>,
+    Fragmentable {
+  position: () => Promise<AsyncIterator<Int>>;
+  title: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ArticleTitleNullablePromise
+  extends Promise<ArticleTitle | null>,
+    Fragmentable {
+  position: () => Promise<Int>;
+  title: () => Promise<String>;
 }
 
 export interface ArticleConnection {
@@ -1194,170 +910,6 @@ export interface AggregateArticleSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface MediaConnection {
-  pageInfo: PageInfo;
-  edges: MediaEdge[];
-}
-
-export interface MediaConnectionPromise
-  extends Promise<MediaConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MediaEdge>>() => T;
-  aggregate: <T = AggregateMediaPromise>() => T;
-}
-
-export interface MediaConnectionSubscription
-  extends Promise<AsyncIterator<MediaConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MediaEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMediaSubscription>() => T;
-}
-
-export interface MediaEdge {
-  node: Media;
-  cursor: String;
-}
-
-export interface MediaEdgePromise extends Promise<MediaEdge>, Fragmentable {
-  node: <T = MediaPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface MediaEdgeSubscription
-  extends Promise<AsyncIterator<MediaEdge>>,
-    Fragmentable {
-  node: <T = MediaSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateMedia {
-  count: Int;
-}
-
-export interface AggregateMediaPromise
-  extends Promise<AggregateMedia>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateMediaSubscription
-  extends Promise<AsyncIterator<AggregateMedia>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SubtitleConnection {
-  pageInfo: PageInfo;
-  edges: SubtitleEdge[];
-}
-
-export interface SubtitleConnectionPromise
-  extends Promise<SubtitleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SubtitleEdge>>() => T;
-  aggregate: <T = AggregateSubtitlePromise>() => T;
-}
-
-export interface SubtitleConnectionSubscription
-  extends Promise<AsyncIterator<SubtitleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SubtitleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSubtitleSubscription>() => T;
-}
-
-export interface SubtitleEdge {
-  node: Subtitle;
-  cursor: String;
-}
-
-export interface SubtitleEdgePromise
-  extends Promise<SubtitleEdge>,
-    Fragmentable {
-  node: <T = SubtitlePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SubtitleEdgeSubscription
-  extends Promise<AsyncIterator<SubtitleEdge>>,
-    Fragmentable {
-  node: <T = SubtitleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSubtitle {
-  count: Int;
-}
-
-export interface AggregateSubtitlePromise
-  extends Promise<AggregateSubtitle>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSubtitleSubscription
-  extends Promise<AsyncIterator<AggregateSubtitle>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TitleConnection {
-  pageInfo: PageInfo;
-  edges: TitleEdge[];
-}
-
-export interface TitleConnectionPromise
-  extends Promise<TitleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TitleEdge>>() => T;
-  aggregate: <T = AggregateTitlePromise>() => T;
-}
-
-export interface TitleConnectionSubscription
-  extends Promise<AsyncIterator<TitleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TitleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTitleSubscription>() => T;
-}
-
-export interface TitleEdge {
-  node: Title;
-  cursor: String;
-}
-
-export interface TitleEdgePromise extends Promise<TitleEdge>, Fragmentable {
-  node: <T = TitlePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TitleEdgeSubscription
-  extends Promise<AsyncIterator<TitleEdge>>,
-    Fragmentable {
-  node: <T = TitleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateTitle {
-  count: Int;
-}
-
-export interface AggregateTitlePromise
-  extends Promise<AggregateTitle>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTitleSubscription
-  extends Promise<AsyncIterator<AggregateTitle>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface BatchPayload {
   count: Long;
 }
@@ -1401,174 +953,27 @@ export interface ArticleSubscriptionPayloadSubscription
 
 export interface ArticlePreviousValues {
   id: ID_Output;
-  name: String;
   author?: String;
-  postTime?: DateTimeOutput;
+  name?: String;
+  postTime?: String;
 }
 
 export interface ArticlePreviousValuesPromise
   extends Promise<ArticlePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
   author: () => Promise<String>;
-  postTime: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  postTime: () => Promise<String>;
 }
 
 export interface ArticlePreviousValuesSubscription
   extends Promise<AsyncIterator<ArticlePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
-  postTime: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface MediaSubscriptionPayload {
-  mutation: MutationType;
-  node: Media;
-  updatedFields: String[];
-  previousValues: MediaPreviousValues;
-}
-
-export interface MediaSubscriptionPayloadPromise
-  extends Promise<MediaSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MediaPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MediaPreviousValuesPromise>() => T;
-}
-
-export interface MediaSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MediaSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MediaSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MediaPreviousValuesSubscription>() => T;
-}
-
-export interface MediaPreviousValues {
-  id: ID_Output;
-  url?: String;
-  posicion?: Int;
-}
-
-export interface MediaPreviousValuesPromise
-  extends Promise<MediaPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  url: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface MediaPreviousValuesSubscription
-  extends Promise<AsyncIterator<MediaPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  url: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface SubtitleSubscriptionPayload {
-  mutation: MutationType;
-  node: Subtitle;
-  updatedFields: String[];
-  previousValues: SubtitlePreviousValues;
-}
-
-export interface SubtitleSubscriptionPayloadPromise
-  extends Promise<SubtitleSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = SubtitlePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = SubtitlePreviousValuesPromise>() => T;
-}
-
-export interface SubtitleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SubtitleSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SubtitleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SubtitlePreviousValuesSubscription>() => T;
-}
-
-export interface SubtitlePreviousValues {
-  id: ID_Output;
-  subtitle?: String;
-  text?: String;
-  posicion?: Int;
-}
-
-export interface SubtitlePreviousValuesPromise
-  extends Promise<SubtitlePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  subtitle: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface SubtitlePreviousValuesSubscription
-  extends Promise<AsyncIterator<SubtitlePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  subtitle: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TitleSubscriptionPayload {
-  mutation: MutationType;
-  node: Title;
-  updatedFields: String[];
-  previousValues: TitlePreviousValues;
-}
-
-export interface TitleSubscriptionPayloadPromise
-  extends Promise<TitleSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TitlePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TitlePreviousValuesPromise>() => T;
-}
-
-export interface TitleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TitleSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TitleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TitlePreviousValuesSubscription>() => T;
-}
-
-export interface TitlePreviousValues {
-  id: ID_Output;
-  title?: String;
-  text?: String;
-  posicion?: Int;
-}
-
-export interface TitlePreviousValuesPromise
-  extends Promise<TitlePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  text: () => Promise<String>;
-  posicion: () => Promise<Int>;
-}
-
-export interface TitlePreviousValuesSubscription
-  extends Promise<AsyncIterator<TitlePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  text: () => Promise<AsyncIterator<String>>;
-  posicion: () => Promise<AsyncIterator<Int>>;
+  name: () => Promise<AsyncIterator<String>>;
+  postTime: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -1581,16 +986,6 @@ export type ID_Output = string;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1614,16 +1009,20 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Title",
-    embedded: false
+    name: "ArticleMedia",
+    embedded: true
   },
   {
-    name: "Subtitle",
-    embedded: false
+    name: "ArticleSubtitle",
+    embedded: true
   },
   {
-    name: "Media",
-    embedded: false
+    name: "ArticleText",
+    embedded: true
+  },
+  {
+    name: "ArticleTitle",
+    embedded: true
   }
 ];
 
