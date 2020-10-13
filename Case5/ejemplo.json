@@ -5,6 +5,7 @@
     "Titles" : [{"Title":"Hola","Position:":1}],
     "Subtitles" : [{"Subitle":"Hola","Position:":2}],
     "Texts" : [{"Text":"Hola","Position:":3}],
-    "Media" : [{"url":"Hola.com","Position:":4}]
+    "Media" : [{"url":"Hola.com","Position:":4}],
+    "Hashtags":["Hola","PEPE","Tamarindo"]
             
 }
