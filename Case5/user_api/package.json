@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.7.36",
     "@types/tedious": "^4.0.1",
     "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
