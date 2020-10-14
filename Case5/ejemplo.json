@@ -1,48 +1,12 @@
 {
     "Name" :"Las aventuras de un computin",
-    "autor": "Un computin",
-    "Sections":[
-                {"Title":"Titulo 1",
-                "text":"El nacimiento de un computin",
-                "images":[
-                        {"image":"Imagen 1"}
-                         ],
-                "subtitles":[
-                        {"Subtitle":"Subtitulo 1",
-                        "text":"El nace",
-                        "images":[
-                                {"image":"Imagen_sub 1"}
-                                ]
-                        },
-                        {"Subtitle":"Subtitulo 1",
-                            "text":"El nace",
-                            "images":[
-                                    {"image":"Imagen_sub 1"}
-                                    ]
-                            }
+    "Author": "Un computin",
+    "PostTime": "2020-10-13T08:01:00+0000",
+    "Titles" : [{"Title":"Hola","Position:":1}],
+    "Subtitles" : [{"Subitle":"Hola","Position:":2}],
+    "Texts" : [{"Text":"Hola","Position:":3}],
+    "Media" : [{"url":"Hola.com","Position:":4}],
+    "Hashtags" : ["granblue","tempest/granblue","@zephyrzerrin","fantasy","photo","your","harem","akashiya","ナルメア","@studio","vampire/zetsuen","glistened","glory","like","something","🔴live","@bobbyd107"]
 
-                ]
-                },
-                {"Title":"Titulo 2",
-                    "text":"El fallecimiento de un computin",
-                    "images":[
-                            {"image":"Imagen 1"}
-                             ],
-                    "subtitles":[
-                            {"Subtitle":"Subtitulo 1",
-                            "text":"El fallece",
-                            "images":[
-                                    {"image":"Imagen_sub 1"}
-                                    ]
-                            },
-                            {"Subtitle":"Subtitulo 1",
-                                "text":"El fallece again",
-                                "images":[
-                                        {"image":"Imagen_sub 1"}
-                                        ]
-                                }
-    
-                    ]
-                    }
-            ]
+            
 }
