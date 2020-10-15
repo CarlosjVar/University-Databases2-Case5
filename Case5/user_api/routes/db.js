@@ -24,6 +24,10 @@ app.get('/elastictest', (function (req, res, next) {
     var tags = elasticConnection_1.elasticController.getInstance().getTagCount();
     res.json(JSON.stringify(tags, null, 4));
 }));
+app.get('/getArticles', function (req, res, next) {
+    mongooseConnection_1.MongooseController.getInstance().getArticlesByTag(["vampire/zetsuen", "tournament", "shana", "everyone"]);
+    res.send("enviao");
+});
 app.get('/populate', function (req, res, next) {
     for (var i = 0; i < 18; i++) {
         mongooseConnection_1.MongooseController.getInstance().populateDB();

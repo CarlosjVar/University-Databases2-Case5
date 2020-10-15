@@ -60,9 +60,12 @@ export class MongooseController{
     }
     return this.instance
   }
-  public getArticles()
-  {
-
+  public getArticlesByTag(tags:any){
+    ArticleModel.find({"Hashtags":{"$in":tags}},(err,articles)=>
+    {
+        if (err) return console.error(err);
+        console.log(JSON.stringify(articles,null,4));
+    })
   }
   public populateDB()
   {
@@ -91,22 +94,22 @@ export class MongooseController{
           switch (Math.trunc(tipo)){
               case 0:
                   // crea título
-                  sections.push({Title:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Titulo})
+                  sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Titulo})
                   break;
               case 1:
-                sections.push({Subtitle:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Subtitulo})
+                sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Subtitulo})
                   //crea subtitulo
                   break
               case 2:
-                sections.push({text:texto[Math.trunc(getRandomArbitrary(0,texto.length))],ComponentType:Textoo})
+                sections.push({Content:texto[Math.trunc(getRandomArbitrary(0,texto.length))],ComponentType:Textoo})
                   break
                   //crea text
               case 3:
-                sections.push({media:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Imagenes})
+                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Imagenes})
                   //crea media
                   break
               case 4:
-                sections.push({media:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Videos})
+                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Videos})
                   //crea media
                   break
 

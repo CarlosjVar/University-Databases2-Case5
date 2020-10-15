@@ -24,8 +24,10 @@ var elasticController = /** @class */ (function () {
             index: 'palabras',
             body: {
                 "aggs": {
-                    "cuenta": {
-                        sum: { "field": "palabra.keyword" }
+                    "aggs": {
+                        "cuenta": {
+                            sum: { "field": "palabra.keyword" }
+                        }
                     }
                 }
             }

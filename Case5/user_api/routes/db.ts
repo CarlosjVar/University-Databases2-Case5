@@ -28,7 +28,11 @@ app.get('/elastictest',((req, res, next) => {
 }))
 
 
+app.get('/getArticles',(req,res,next)=>{
 
+    MongooseController.getInstance().getArticlesByTag(["vampire/zetsuen","tournament","shana","everyone"]);
+    res.send("enviao")
+})
 app.get('/populate',(req,res,next)=>
 {
     for(let i = 0; i<18;i++)
