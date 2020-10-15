@@ -76,39 +76,44 @@ export class MongooseController{
       shuffle(nombres);
       const nombre = nombres[0]
       let publishers = ["Pepito Gonzales","Pepote Gonzales","Melvin S Ragland","Stephen M Szymanski","Virginia B Fowler","Marsha T Humphrey"]
-      let titles = []
-      let subtitles = []
-      let texts = []
-      let images = []
+      let sections= []
       let publisher = publishers[Math.trunc(getRandomArbitrary(0,publishers.length))];
+      const Titulo = 1;
+      const Subtitulo = 2;
+      const Textoo = 3;
+      const Imagenes = 4;
+      const Videos = 5;
 
       for(var i= 0 ; i<20;i++)
       {    
-          let tipo = getRandomArbitrary(0,4)
+          let tipo = getRandomArbitrary(0,5)
           
           switch (Math.trunc(tipo)){
               case 0:
                   // crea título
-                  
-                  titles.push({Title:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],Position:i})
+                  sections.push({Title:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Titulo})
                   break;
               case 1:
-                  subtitles.push({Subtitle:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],Position:i})
+                sections.push({Subtitle:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Subtitulo})
                   //crea subtitulo
                   break
               case 2:
-                  texts.push({text:texto[Math.trunc(getRandomArbitrary(0,texto.length))],Position:i})
+                sections.push({text:texto[Math.trunc(getRandomArbitrary(0,texto.length))],ComponentType:Textoo})
                   break
                   //crea text
               case 3:
-                  images.push({media:media[Math.trunc(getRandomArbitrary(0,media.length))],Position:i})
+                sections.push({media:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Imagenes})
+                  //crea media
+                  break
+              case 4:
+                sections.push({media:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Videos})
                   //crea media
                   break
 
           }
 
       }
-      let htags = ["granblue","tempest/granblue","@zephyrzerrin","fantasy","photo","your","harem","akashiya","ナルメア","@studio","vampire/zetsuen","glistened","glory","like","something","🔴live","@bobbyd107"]
+      let htags = ["tournament","shana","everyone","catalina","granblue","sign","online","tempest/granblue","@zephyrzerrin","fantasy","photo","your","harem","akashiya","ナルメア","@studio","vampire/zetsuen","glistened","glory","like","something","🔴live","@bobbyd107"]
       const postDate = new Date();
       postDate.setDate(postDate.getDate() - Math.trunc(Math.random()*700));
       const aproxHashtags = Math.trunc(Math.random()*4 + 1) / htags.length;
@@ -123,10 +128,7 @@ export class MongooseController{
                 }),
                 Name:nombre,
                 Author:publisher,
-                Titles:titles,
-                Subtitles:subtitles,
-                Texts:texts,
-                Media:images,
+                Sections:sections,
                 PostTime:postDate
              })
           newArticle.save((err,post)=>

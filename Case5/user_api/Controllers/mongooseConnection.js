@@ -63,33 +63,39 @@ var MongooseController = /** @class */ (function () {
         shuffle(nombres);
         var nombre = nombres[0];
         var publishers = ["Pepito Gonzales", "Pepote Gonzales", "Melvin S Ragland", "Stephen M Szymanski", "Virginia B Fowler", "Marsha T Humphrey"];
-        var titles = [];
-        var subtitles = [];
-        var texts = [];
-        var images = [];
+        var sections = [];
         var publisher = publishers[Math.trunc(getRandomArbitrary(0, publishers.length))];
+        var Titulo = 1;
+        var Subtitulo = 2;
+        var Textoo = 3;
+        var Imagenes = 4;
+        var Videos = 5;
         for (var i = 0; i < 20; i++) {
-            var tipo = getRandomArbitrary(0, 4);
+            var tipo = getRandomArbitrary(0, 5);
             switch (Math.trunc(tipo)) {
                 case 0:
                     // crea título
-                    titles.push({ Title: nombres[Math.trunc(getRandomArbitrary(0, nombres.length))], Position: i });
+                    sections.push({ Title: nombres[Math.trunc(getRandomArbitrary(0, nombres.length))], ComponentType: Titulo });
                     break;
                 case 1:
-                    subtitles.push({ Subtitle: nombres[Math.trunc(getRandomArbitrary(0, nombres.length))], Position: i });
+                    sections.push({ Subtitle: nombres[Math.trunc(getRandomArbitrary(0, nombres.length))], ComponentType: Subtitulo });
                     //crea subtitulo
                     break;
                 case 2:
-                    texts.push({ text: texto[Math.trunc(getRandomArbitrary(0, texto.length))], Position: i });
+                    sections.push({ text: texto[Math.trunc(getRandomArbitrary(0, texto.length))], ComponentType: Textoo });
                     break;
                 //crea text
                 case 3:
-                    images.push({ media: media[Math.trunc(getRandomArbitrary(0, media.length))], Position: i });
+                    sections.push({ media: media[Math.trunc(getRandomArbitrary(0, media.length))], ComponentType: Imagenes });
+                    //crea media
+                    break;
+                case 4:
+                    sections.push({ media: media[Math.trunc(getRandomArbitrary(0, media.length))], ComponentType: Videos });
                     //crea media
                     break;
             }
         }
-        var htags = ["granblue", "tempest/granblue", "@zephyrzerrin", "fantasy", "photo", "your", "harem", "akashiya", "ナルメア", "@studio", "vampire/zetsuen", "glistened", "glory", "like", "something", "🔴live", "@bobbyd107"];
+        var htags = ["tournament", "shana", "everyone", "catalina", "granblue", "sign", "online", "tempest/granblue", "@zephyrzerrin", "fantasy", "photo", "your", "harem", "akashiya", "ナルメア", "@studio", "vampire/zetsuen", "glistened", "glory", "like", "something", "🔴live", "@bobbyd107"];
         var postDate = new Date();
         postDate.setDate(postDate.getDate() - Math.trunc(Math.random() * 700));
         var aproxHashtags = Math.trunc(Math.random() * 4 + 1) / htags.length;
@@ -101,10 +107,7 @@ var MongooseController = /** @class */ (function () {
             }),
             Name: nombre,
             Author: publisher,
-            Titles: titles,
-            Subtitles: subtitles,
-            Texts: texts,
-            Media: images,
+            Sections: sections,
             PostTime: postDate
         });
         newArticle.save(function (err, post) {

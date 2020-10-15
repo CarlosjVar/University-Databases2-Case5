@@ -18,14 +18,14 @@ var elasticController = /** @class */ (function () {
     };
     elasticController.prototype.getTagCount = function () {
         var _this = this;
+        var tags;
         this.client.search({
             size: 0,
             index: 'palabras',
             body: {
                 "aggs": {
                     "cuenta": {
-                        terms: { "field": "palabra.keyword",
-                            "size": 10000 }
+                        sum: { "field": "palabra.keyword" }
                     }
                 }
             }
@@ -34,7 +34,9 @@ var elasticController = /** @class */ (function () {
                 _this.log.error(error);
             }
             _this.log.info(JSON.stringify(resp, null, 4));
+            tags = resp;
         });
+        return tags;
     };
     return elasticController;
 }());

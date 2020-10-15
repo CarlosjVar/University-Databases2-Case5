@@ -21,8 +21,8 @@ app.use('/getHashtag', function (req, res, next) {
 });
 // Prueba conexión elastic
 app.get('/elastictest', (function (req, res, next) {
-    elasticConnection_1.elasticController.getInstance().getTagCount();
-    res.send("Acabado");
+    var tags = elasticConnection_1.elasticController.getInstance().getTagCount();
+    res.json(JSON.stringify(tags, null, 4));
 }));
 app.get('/populate', function (req, res, next) {
     for (var i = 0; i < 18; i++) {

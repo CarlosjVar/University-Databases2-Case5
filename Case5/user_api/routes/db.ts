@@ -22,8 +22,8 @@ app.use('/getHashtag',(req,res,next)=>{
 
 // Prueba conexión elastic
 app.get('/elastictest',((req, res, next) => {
-    elasticController.getInstance().getTagCount();
-    res.send("Acabado")
+    let tags=elasticController.getInstance().getTagCount();
+        res.json(JSON.stringify(tags,null,4))
     
 }))
 

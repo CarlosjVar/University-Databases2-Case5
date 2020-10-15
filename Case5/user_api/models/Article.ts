@@ -4,10 +4,7 @@ const Articles = mongoose.model('Article',new Schema({
     Name:String,
     Author:String,
     PostTime:String,
-    Titles:[{Title:String,Position:Number}],
-    Subtitles:[{Subtitle:String,Position:Number}],
-    Texts:[{Text:String,Position:Number}],
-    Media:[{url:String,Position:Number}],
+    Sections:[{Content:String,ComponentType:Number}],
     Hashtags:[String]
 }))
 

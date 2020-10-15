@@ -19,18 +19,19 @@ export class elasticController{
         return this.instance
     }
     public getTagCount()
-    {
+    {   let tags;
         this.client.search({
         size:0,
         index: 'palabras',
-        body:
-        {
+        body:{
+        "aggs":
+        {   
             "aggs":{
-            "cuenta":{
-              terms : { "field" : "palabra.keyword",
-              "size": 10000 },
-                    }
-            }
+                "cuenta":{
+                    sum : { "field" : "palabra.keyword"},
+                }          
+            } 
+        }
         }
         }).then((resp,error)=>{
             if(error)
@@ -38,6 +39,8 @@ export class elasticController{
                 this.log.error(error)
             }
             this.log.info(JSON.stringify(resp,null,4))
+            tags = resp;
         })
+        return tags;
     }
 }
