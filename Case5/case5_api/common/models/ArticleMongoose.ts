@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 const { Schema } = mongoose;
-const Articles = mongoose.model('Article',new Schema({
+export const Articles = mongoose.model('Article',new Schema({
     Name:String,
     Author:String,
     PostTime:String,
@@ -10,5 +10,3 @@ const Articles = mongoose.model('Article',new Schema({
     Media:[{url:String,Position:Number}],
     Hashtags:[String]
 }))
-
-export default Articles
