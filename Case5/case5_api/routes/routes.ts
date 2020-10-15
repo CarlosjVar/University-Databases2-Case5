@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { Logger } from '../logger/logger';
+import { Logger } from '../common';
 
 import Db from './db'
 import User from './levels';

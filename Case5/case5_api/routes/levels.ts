@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Logger } from '../logger/logger';
+import { Logger } from '../common';
 import Cache from '../cache';
 
 const logger = new Logger()
