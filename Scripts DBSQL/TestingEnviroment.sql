@@ -1,11 +1,29 @@
-/*
+--/*
 INSERT INTO 
     dbo.Hashtags (Hashtag)
 VALUES 
-    ('test1'), -- ID = 1
-    ('test2'), -- ID = 2
-    ('test3')  -- ID = 3
-
+    ('tournament'),       -- ID = 1
+    ('shana'),            -- ID = 2
+    ('everyone'),         -- ID = 3
+    ('catalina'),         -- ID = 4
+    ('granblue'),         -- ID = 5
+    ('sign'),             -- ID = 6
+    ('tempest/granblue'), -- ID = 7
+    ('@zephyrzerrin'),    -- ID = 8
+    ('fantasy'),          -- ID = 9
+    ('photo'),            -- ID = 10
+    ('your'),             -- ID = 11
+    ('harem'),            -- ID = 12
+    ('akashiya'),         -- ID = 13
+    ('ナルメア'),         -- ID = 14
+    ('@studio'),          -- ID = 15
+    ('vampire/zetsuen'),  -- ID = 16
+    ('glory'),            -- ID = 17
+    ('like'),             -- ID = 18
+    ('🔴live'),          -- ID = 19
+    ('@bobbyd107'),       -- ID = 20  
+    ('something'),        -- ID = 21
+    ('glistened')         -- ID = 22
 
 INSERT INTO 
     dbo.Articles (Name, Author, PostTime, LastUpdate, Enabled)
@@ -17,12 +35,35 @@ VALUES
 INSERT INTO 
     dbo.ArticlesHashtags (IdArticle, IdHashtag)
 VALUES
-    (1, 1), -- ID = 1
-    (1, 2), -- ID = 2
-    (2, 2), -- ID = 3
-    (2, 3), -- ID = 4
-    (3, 3), -- ID = 5
-    (3, 1)  -- ID = 6
+    (1, 1 ),
+    (1, 3 ),
+    (1, 7 ),
+    (1, 9 ),
+    (1, 11),
+    (1, 13),
+    (1, 15),
+    (1, 17),
+    (1, 19),
+    (1, 21),
+    (2, 2 ),
+    (2, 4 ), 
+    (2, 6 ),
+    (2, 8 ),
+    (2, 10),
+    (2, 12),
+    (2, 14),
+    (2, 16),
+    (2, 18),
+    (2, 20),
+    (2, 22),
+    (3, 2 ),
+    (3, 3 ),
+    (3, 5 ),
+    (3, 7 ),
+    (3, 11),
+    (3, 13),
+    (3, 17),
+    (3, 19)
 
 INSERT INTO 
     dbo.ComponentTypes (TypeName)
@@ -63,3 +104,5 @@ VALUES
     ('Subtitle', 21  , 3, 2, GETDATE(), 1), -- ID = 22
     ('Text'    , 22  , 3, 5, GETDATE(), 1)  -- ID = 23
 --*/
+
+exec SP_GetHashtagsArticles 'shana'
