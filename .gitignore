@@ -119,3 +119,4 @@ dist
 
 node_modules/
 Case5/commands.txt
+*.js
