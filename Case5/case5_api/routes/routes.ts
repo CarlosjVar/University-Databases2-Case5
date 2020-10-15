@@ -1,9 +1,8 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { Logger } from '../logger/logger';
+import { Logger } from '../common';
 
-import Db from './db'
-import User from './levels';
+import Levels from './levels';
 
 class Routes {
 
@@ -28,11 +27,7 @@ class Routes {
 
     private routes(): void {
 
-        // user route
-
-        this.express.use('/db',Db)
-
-        this.express.use('/levels', User);
+        this.express.use('/levels', Levels);
     
     }
 }

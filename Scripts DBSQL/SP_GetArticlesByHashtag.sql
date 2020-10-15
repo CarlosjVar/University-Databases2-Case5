@@ -48,6 +48,7 @@ BEGIN
             article.Id = component.IdArticle
     WHERE
         article.Id IN (SELECT IdArticle FROM RelatedArticles)
-
+    ORDER BY 
+        article.Id
 END
 GO

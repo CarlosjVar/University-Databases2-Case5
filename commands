@@ -1,0 +1,1 @@
+docker run --name nodejs -p 3070:3070 -it -v C:\Applications\GitHub\University-Databases2-Case5\Case5:/home/Case5 node:latest bash

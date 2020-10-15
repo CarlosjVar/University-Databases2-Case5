@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { Logger } from './logger/logger'
+import { Logger, Constants } from './common'
 import Routes from './routes/routes';
 
 class App {
@@ -28,7 +28,7 @@ class App {
     private routes(): void {
 
         this.express.get('/', (req,res,next) => {
-            res.send("Typescript App works!!");
+            res.send(Constants.WELCOME_MESSAGE);
         });
 
         // user route
@@ -36,7 +36,7 @@ class App {
 
         // handle undefined routes
         this.express.use('*', (req,res,next) => {
-            res.send("Make sure url is correct!!!");
+            res.send(Constants.WRONG_ROUTE_MESSAGE);
         });
 
     }

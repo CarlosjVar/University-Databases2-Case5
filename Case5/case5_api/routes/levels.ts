@@ -1,6 +1,6 @@
 import * as express from 'express';
-import { Logger } from '../logger/logger';
-import Cache from '../cache';
+import { Logger } from '../common';
+import Cache from '../common/cache/cache';
 
 const logger = new Logger()
 const cache = Cache.getInstance();
