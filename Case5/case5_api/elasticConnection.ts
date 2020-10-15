@@ -1,6 +1,7 @@
+import {Constants} from './common'
 var elasticsearch=require('elasticsearch');
 
 var client = new elasticsearch.Client( {
-    host:'25.10.118.245:9200'
+    host: Constants.ELASTIC_HOST
 });
 export default client;

@@ -1,5 +1,6 @@
 
-import { Tedis, TedisPool } from "tedis";
+import { Tedis } from "tedis";
+import { Constants } from '../index'
 
 export class Cache {
   private static instance: Cache;
@@ -7,8 +8,8 @@ export class Cache {
 
   private constructor() {
     this.tedisCache = new Tedis({
-      port: 6379,
-      host: "25.10.118.245"
+      port: Constants.CACHE_PORT,
+      host: Constants.CACHE_HOST
     });
   }
 
