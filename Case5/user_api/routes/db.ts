@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { Logger } from '../logger/logger';
-import tediousController from '../configs/tediousConnection'
-import client from '../configs/elasticConnection';
-import{MongooseController} from '../configs/mongooseConnection'
+import tediousController from '../Controllers/tediousConnection'
+import {elasticController} from '../Controllers/elasticConnection';
+import{MongooseController} from '../Controllers/mongooseConnection'
 
 // db setup
 const app = express();
@@ -22,29 +22,17 @@ app.use('/getHashtag',(req,res,next)=>{
 
 // Prueba conexión elastic
 app.get('/elastictest',((req, res, next) => {
-
-    client.search({
-        index:'palabras'
-    },(error,response,status) =>
-    {
-        if(error){
-            logger.error(error)
-        }
-        else
-        {
-            console.log("--- Response ---");
-            console.log(response);
-            console.log("--- Hits ---");
-            response.hits.hits.forEach(function(hit){
-                console.log(hit);
-            })
-        }
-    }
-    )
+    let tags=elasticController.getInstance().getTagCount();
+        res.json(JSON.stringify(tags,null,4))
+    
 }))
 
 
+app.get('/getArticles',(req,res,next)=>{
 
+    MongooseController.getInstance().getArticlesByTag(["vampire/zetsuen","tournament","shana","everyone"]);
+    res.send("enviao")
+})
 app.get('/populate',(req,res,next)=>
 {
     for(let i = 0; i<18;i++)
