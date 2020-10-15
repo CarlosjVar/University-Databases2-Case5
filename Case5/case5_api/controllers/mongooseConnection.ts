@@ -1,6 +1,6 @@
-import {Logger} from '../logger/logger'
+import {Logger, Articles} from '../common'
 import * as mongoose from 'mongoose';
-import ArticleModel from '../models/Article'
+
 mongoose.connect('mongodb://host.docker.internal:27017/Case5', {useNewUrlParser: true, useUnifiedTopology: true});
 function getRandomArbitrary(min, max) {
   return Math.trunc(Math.random() * (max - min) + min);
