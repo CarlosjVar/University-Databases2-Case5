@@ -4,10 +4,9 @@ import { Logger, Constants } from '../common'
 var Request = require('tedious').Request
 var TYPES= require('tedious').TYPES;
 
-
-
-// db setup
-
+/**
+ * Class in charge of handling all the request to the MSSQL db
+ */
 export class SqlController{
     private static instance: SqlController;
 
@@ -18,7 +17,10 @@ export class SqlController{
         this.connection = SqlConnection.getInstance().connection;
     }
     
-
+    /**
+    * Request MSSQL for all articles that matches any of the tags in the array
+    * @param tags 
+    */
     public getArticles(Hashtag : String) {
         
         let connection = this.connection
@@ -54,7 +56,9 @@ export class SqlController{
             connection.callProcedure(request);
         })
     }
-
+    /**
+     * Returns an instance of the class
+     */
     public static getInstance (): SqlController {
         if (!SqlController.instance) {
             SqlController.instance = new SqlController();
