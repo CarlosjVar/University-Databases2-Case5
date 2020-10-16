@@ -105,4 +105,4 @@ VALUES
     ('Text'    , 22  , 3, 5, GETDATE(), 1)  -- ID = 23
 --*/
 
-exec SP_GetHashtagsArticles 'shana'
+exec SP_GetHashtagsArticles 'catalina'

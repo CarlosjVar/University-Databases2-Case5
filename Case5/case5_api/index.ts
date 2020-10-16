@@ -1,15 +1,13 @@
 import App from './app';
 import * as http from 'http';
 import { Logger } from './common';
+import { SqlController } from './controllers'
 
 const port = 3070;
 const logger = new Logger();
 
-// Database connections
+SqlController.getInstance().getArticles("catalina");
 
-var Connection = require('tedious').Connection;
-var Request = require('tedious').Request
-var TYPES = require('tedious').TYPES;
 
     App.set('port', port);
     const server = http.createServer(App);

@@ -1,4 +1,4 @@
-import {Logger} from '../logger/logger'
+import {Logger} from '../common'
 var elasticsearch=require('elasticsearch');
 export class elasticController{
     private client:any;

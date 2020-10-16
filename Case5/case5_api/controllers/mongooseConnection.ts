@@ -24,8 +24,8 @@ function shuffle(array) {
 }
 export class MongooseController{
 
-  private static instance:MongooseController ;
-  private log: Logger;
+  private static instance : MongooseController;
+  private log : Logger;
   private db : any;
   private constructor()
   {
