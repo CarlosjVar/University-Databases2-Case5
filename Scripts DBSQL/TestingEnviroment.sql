@@ -104,5 +104,12 @@ VALUES
     ('Subtitle', 21  , 3, 2, GETDATE(), 1), -- ID = 22
     ('Text'    , 22  , 3, 5, GETDATE(), 1)  -- ID = 23
 --*/
+DECLARE @TABLA LEVELHASHTAGS_TABLE;
+INSERT INTO 
+    @TABLA
+VALUES
+    ('catalina'),
+    ('granblue'),
+    ('sign')
 
-exec SP_GetHashtagsArticles 'catalina'
+exec SP_GetHashtagsArticles @TABLA

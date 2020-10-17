@@ -8,7 +8,7 @@ GO
 -- Description: Retrieve all articles related to given hashtag.
 -- =============================================
 CREATE OR ALTER PROCEDURE SP_GetHashtagsArticles 
-	@pHashtag VARCHAR(100)
+	@pHashtags LEVELHASHTAGS_TABLE READONLY
 AS
 BEGIN
 
@@ -31,7 +31,7 @@ BEGIN
             ON
             hashtags.Id = relatedArticles.IdHashtag
         WHERE
-            @pHashtag = hashtags.Hashtag
+            hashtags.Hashtag IN (SELECT Hashtag FROM @pHashtags)
     )
     SELECT
         article.Name, 
