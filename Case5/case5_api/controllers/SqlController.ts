@@ -1,5 +1,5 @@
 import { SqlConnection} from "../connections"
-import { Logger, Constants, Article } from '../common'
+import { Logger, Constants, Article} from '../common'
 import webpackConfig = require("../webpack.config") 
 
 var Request = require('tedious').Request
@@ -23,11 +23,11 @@ export class SqlController{
     * @param tags 
     */
     public getArticles(pHashtags : String[]) : Article[]{
-        
-        let connection = this.connection
-        let articles = [] 
 
-        this.connection.on('connect', function(err){
+        let connection = this.connection
+        
+        var articles = connection.on('connect', function(err){
+            
             let logger = new Logger() 
             if (err) {
                 logger.error(err) 
@@ -40,11 +40,11 @@ export class SqlController{
                 if (err) {
                     logger.error(err) 
                 } 
-            }) 
+            })
 
             var hashtagsTable = {
                 columns: [
-                  {name: 'Hashtag', type: TYPES.VarChar, length: 100}
+                {name: 'Hashtag', type: TYPES.VarChar, length: 100}
                 ],
                 rows: []
             } 
@@ -53,10 +53,11 @@ export class SqlController{
                 var row = [pHashtags[index]] 
                 hashtagsTable.rows.push(row) 
             }
-          
+        
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
 
-            var constructedArticles = []
+            let constructedArticles : Article[]
+            constructedArticles = []
             request.on('doneInProc', function (rowCount, more, rows) {
                 logger.info(rowCount + " rows returned") 
                 /*
@@ -64,18 +65,26 @@ export class SqlController{
                 */
                 var current = 0
                 rows.forEach(row => {
-                    logger.info(row) 
+                    if (row.Id.value != current){
+                        current = row.Id.value
+                        var name = row.Name.value
+                        var author = row.Author.value
+                        var postTime = row.PostTime.value
+                        var sections = []
+                        let newArticle = new Article(name, author, postTime, sections)
+                        constructedArticles.push(newArticle)
+                    }
+                    var lastIndex = constructedArticles.length - 1
+                    constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
                 }) 
             }) 
 
-            request.on('error', function (err) {
-                logger.error(err)
-             }) 
-
             connection.callProcedure(request) 
-
-            articles = constructedArticles 
             
+            constructedArticles.forEach(article => {
+                logger.info(article.toString())
+            });
+
         })
 
         return articles 
