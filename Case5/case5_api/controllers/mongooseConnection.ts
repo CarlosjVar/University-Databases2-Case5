@@ -85,18 +85,12 @@ export class MongooseController{
           console.log(err);
           
         }
-        else
-        {
-          console.log("funciono");
-        
-        }
         
     }).then((articlesList) =>{
      
 
         var articlesLists = [];
         for (var i in articlesList){
-          console.log("-------------------- /n --------------- /n -------------");
           let article=JSON.parse(JSON.stringify(articlesList[i]));
           let sections = article["Sections"]
           let sect = []

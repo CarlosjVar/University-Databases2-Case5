@@ -34,15 +34,7 @@ class Routes {
             let tags= ["tournament","shana","everyone"]
             DataController.getInstance().getArticles(tags)
         })
-        this.express.get("/redis",(req,res,next)=>
-        {
-            Cache.getInstance().redisSet("llave","Pepotototototon")
-            Cache.getInstance().redisGet("llave").then((result)=>
-            {
-                console.log(result);
-                
-            })
-        })
+
     
     }
 }
