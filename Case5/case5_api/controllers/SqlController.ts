@@ -22,11 +22,11 @@ export class SqlController{
     * Request MSSQL for all articles that matches any of the tags in the array
     * @param tags 
     */
-    public getArticles(pHashtags : String[]) : Article[]{
+    public getArticles(pHashtags : String[]) : void{
 
         let connection = this.connection
         
-        var articles = connection.on('connect', function(err){
+        this.connection.on('connect', function(err){
             
             let logger = new Logger() 
             if (err) {
@@ -79,15 +79,15 @@ export class SqlController{
                 }) 
             }) 
 
-            connection.callProcedure(request) 
+            this.connection.callProcedure(request) 
             
             constructedArticles.forEach(article => {
-                logger.info(article.toString())
+                article.toString()
             });
 
         })
 
-        return articles 
+        //return articles 
     }
     /**
      * Returns an instance of the class
