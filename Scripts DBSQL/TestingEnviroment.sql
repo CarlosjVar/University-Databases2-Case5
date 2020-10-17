@@ -108,8 +108,6 @@ DECLARE @TABLA LEVELHASHTAGS_TABLE;
 INSERT INTO 
     @TABLA
 VALUES
-    ('catalina'),
-    ('granblue'),
-    ('sign')
+    ('catalina')
 
 exec SP_GetHashtagsArticles @TABLA

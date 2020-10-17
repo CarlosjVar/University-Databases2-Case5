@@ -1,17 +1,17 @@
 import {Logger} from '../common'
-var elasticsearch=require('elasticsearch');
+var elasticsearch=require('elasticsearch') 
 /**
  * Class in charge of handling all the request to the elasticsearch index
  */
 export class elasticController{
-    private client:any;
-    private log: Logger;
+    private client:any 
+    private log: Logger 
     private static instance:elasticController
     private constructor(){
-        this.log = new Logger();
+        this.log = new Logger() 
         this.client = new elasticsearch.Client( {
             host:'25.10.118.245:9200'
-        });
+        }) 
     }
     /**
    * Returns an instance of the class
@@ -20,7 +20,7 @@ export class elasticController{
     {
         if(!this.instance)
         {
-            this.instance = new elasticController();
+            this.instance = new elasticController() 
         }
         return this.instance
     }
@@ -28,7 +28,7 @@ export class elasticController{
      * Asks elastic' index for the tags included in the level requested
      */
     public getTagCount()
-    {   let tags;
+    {   let tags 
         this.client.search({
         size:0,
         index: 'palabras',
@@ -48,8 +48,8 @@ export class elasticController{
                 this.log.error(error)
             }
             this.log.info(JSON.stringify(resp,null,4))
-            tags = resp;
+            tags = resp 
         })
-        return tags;
+        return tags 
     }
 }

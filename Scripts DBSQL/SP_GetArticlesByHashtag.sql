@@ -11,9 +11,6 @@ CREATE OR ALTER PROCEDURE SP_GetHashtagsArticles
 	@pHashtags LEVELHASHTAGS_TABLE READONLY
 AS
 BEGIN
-
-	SET NOCOUNT ON;
-
     WITH 
         RelatedArticles (IdArticle)
     AS
@@ -34,6 +31,7 @@ BEGIN
             hashtags.Hashtag IN (SELECT Hashtag FROM @pHashtags)
     )
     SELECT
+        article.Id,
         article.Name, 
         article.Author, 
         article.PostTime,

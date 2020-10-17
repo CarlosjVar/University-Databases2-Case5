@@ -1,10 +1,10 @@
 import { Logger, Constants } from '../common'
-var Connection = require('tedious').Connection;
+var Connection = require('tedious').Connection 
 
 export class SqlConnection {
 
-    private static instance: SqlConnection;
-    public connection;
+    private static instance: SqlConnection 
+    public connection 
 
     private constructor() 
     {
@@ -23,6 +23,8 @@ export class SqlConnection {
             options: {
                 database: 'Caso5BD2',
                 rowCollectionOnRequestCompletion: true,
+                useColumnNames: true,
+                rowCollectionOnDone: true,
                 encrypt: false
             }
         }
@@ -32,9 +34,9 @@ export class SqlConnection {
 
     public static getInstance(): SqlConnection {
         if (!SqlConnection.instance) {
-            SqlConnection.instance = new SqlConnection();
+            SqlConnection.instance = new SqlConnection() 
         }
-        return SqlConnection.instance;
+        return SqlConnection.instance 
     }
 
 }

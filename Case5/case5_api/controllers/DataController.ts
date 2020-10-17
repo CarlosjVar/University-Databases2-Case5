@@ -6,13 +6,13 @@ import {elasticController} from './elasticConnection'
  * Class made to implement database agnosticism
  */
 export class DataController{
-    private Moongose:any;
-    private MSSQL:any;
-    private Elastic:any;
-    private log:Logger;
-    private static instance:DataController;
+    private Moongose:any 
+    private MSSQL:any 
+    private Elastic:any 
+    private log:Logger 
+    private static instance:DataController 
     private constructor(){
-        this.log = new Logger;  
+        this.log = new Logger   
     }
     /**
      * Returns an instance of the class
@@ -21,9 +21,9 @@ export class DataController{
     {
         if(!this.instance)
         {
-            this.instance = new DataController();
+            this.instance = new DataController() 
         }
-        return this.instance;
+        return this.instance 
     }
     /**
      * Gets all the articles mathing the provided tags in the 2 databases implemented
