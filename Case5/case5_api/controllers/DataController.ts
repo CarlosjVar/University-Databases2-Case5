@@ -29,11 +29,13 @@ export class DataController{
      * Gets all the articles mathing the provided tags in the 2 databases implemented
      * @param tags 
      */
-    public getArticles(tags:Array<String>):Array<Article>
+    public async getArticles(tags:Array<String>):Promise<Array<Article>>
     {
-        let mongooseArticles = MongooseController.getInstance().getArticlesByTag(tags)
-        let sqlArticles = SqlController.getInstance().getArticles(tags)
+        let mongooseArticles = await  MongooseController.getInstance().getArticlesByTag(tags)
+        //let sqlArticles = SqlController.getInstance().getArticles(tags)
         let placeholder = [new Article("a","a","22222",[{Content:"a",ComponentType:1}],["a"])]
+        console.log(JSON.stringify (mongooseArticles,null,4));
+        
         return placeholder
     }
    
