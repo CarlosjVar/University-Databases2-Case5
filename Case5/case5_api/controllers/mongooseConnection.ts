@@ -1,10 +1,17 @@
 import {Logger, Articles} from '../common'
 import * as mongoose from 'mongoose';
-
-mongoose.connect('mongodb://host.docker.internal:27017/Case5', {useNewUrlParser: true, useUnifiedTopology: true});
+/**
+ * Gets a truncated int in the provided ranges
+ * @param min 
+ * @param max 
+ */
 function getRandomArbitrary(min, max) {
   return Math.trunc(Math.random() * (max - min) + min);
 }
+/**
+ * Shuffles an array , used in db population
+ * @param array
+ */
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -22,6 +29,9 @@ function shuffle(array) {
   }
 
 }
+/**
+ * Class in charge of handling all the requests to mongodb
+ */
 export class MongooseController{
 
   private static instance : MongooseController;
@@ -52,6 +62,9 @@ export class MongooseController{
             this.log.error(e);
         }
   }
+  /**
+   * Returns an instance of the class
+   */
   public static getInstance() : MongooseController
   {
     if(!this.instance)
@@ -60,13 +73,20 @@ export class MongooseController{
     }
     return this.instance
   }
+  /**
+   * Request mongo for all articles that matches any of the tags in the array
+   * @param tags 
+   */
   public getArticlesByTag(tags:any){
-    ArticleModel.find({"Hashtags":{"$in":tags}},(err,articles)=>
+    Articles.find({"Hashtags":{"$in":tags}},(err,articles)=>
     {
         if (err) return console.error(err);
         console.log(JSON.stringify(articles,null,4));
     })
   }
+  /**
+   * Method to randomly populate the mongo datanase
+   */
   public populateDB()
   {
       let nombres= ["PrismaAventura","Bendito sea Mongoose","Redis o Tedis? La pregunta del millón", "Al principio no me gustaba docker y ahora tampoco","Nodemon es un regalo de Dios"]
@@ -119,29 +139,27 @@ export class MongooseController{
       let htags = ["tournament","shana","everyone","catalina","granblue","sign","online","tempest/granblue","@zephyrzerrin","fantasy","photo","your","harem","akashiya","ナルメア","@studio","vampire/zetsuen","glistened","glory","like","something","🔴live","@bobbyd107"]
       const postDate = new Date();
       postDate.setDate(postDate.getDate() - Math.trunc(Math.random()*700));
-      const aproxHashtags = Math.trunc(Math.random()*4 + 1) / htags.length;
-
-          
-          const newArticle = new ArticleModel({
-            Hashtags:htags.filter(
-              (element, index, array) => {
-              if (Math.random()<=aproxHashtags) {
-                  return true;
-                    }
-                }),
-                Name:nombre,
-                Author:publisher,
-                Sections:sections,
-                PostTime:postDate
-             })
-          newArticle.save((err,post)=>
-          {
-            if (err)
-            {
-            this.log.error(err);
-            }
-            
+      const aproxHashtags = Math.trunc(Math.random()*4 + 1) / htags.length;      
+      const newArticle = new Articles({
+        Hashtags:htags.filter(
+          (element, index, array) => {
+          if (Math.random()<=aproxHashtags) {
+              return true;
+                }
+            }),
+            Name:nombre,
+            Author:publisher,
+            Sections:sections,
+            PostTime:postDate
           })
+      newArticle.save((err,post)=>
+      {
+        if (err)
+        {
+        this.log.error(err);
+        }
+        
+      })
 
       
   }
