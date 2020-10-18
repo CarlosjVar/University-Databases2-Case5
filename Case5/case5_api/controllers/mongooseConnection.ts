@@ -42,7 +42,7 @@ export class MongooseController{
     this.log = new Logger() 
         try
         {
-            mongoose.connect('mongodb://host.docker.internal:27017/Case5',
+            mongoose.connect('mongodb://25.10.118.245:27017/Case5',
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
