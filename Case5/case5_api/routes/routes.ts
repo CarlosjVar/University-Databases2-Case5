@@ -34,6 +34,7 @@ class Routes {
             let tags= ["tournament","shana","everyone"]
             DataController.getInstance().getArticles(tags)
         })
+        
 
     
     }

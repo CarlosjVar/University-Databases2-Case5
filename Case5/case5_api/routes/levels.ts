@@ -1,7 +1,6 @@
 import * as express from 'express';
 import { Logger } from '../common';
 import Cache from '../common/cache/cache';
-
 const logger = new Logger()
 const cache = Cache.getInstance();
 
@@ -11,6 +10,8 @@ app.get('/get/:from/:to?', async (req, res) => {
 
   var getAsynchronous = async function(){
     logger.info(`level ranges`);
+    let min = req.params.from;
+    let max = req.params.to;
     if(req.params.to){
       return cache.redisGet(req.params.to);
     }
@@ -23,5 +24,11 @@ app.get('/get/:from/:to?', async (req, res) => {
   
   }
 );
+app.use('/get/:from/:to?',((req, res, next) => {
+  
+})
+
+
+
 
 export default app;
