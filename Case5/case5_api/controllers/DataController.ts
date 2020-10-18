@@ -44,16 +44,7 @@ export class DataController{
             })
 
         })
-        
-        // let sqlArticles = await SqlController.getInstance().getArticles(tags,(err,results)=>
-        // {
-        //     if(err)
-        //     {
-        //         console.log(err);
-                
-        //     }
-        //     return results
-        // })
+
         return promiseDbs
 
     }
