@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Logger } from '../common';
-import {DataController} from '../controllers/'
+import {DataController,MongooseController} from '../controllers/'
 import {Cache} from '../common'
 import Levels from './levels';
 
@@ -31,13 +31,16 @@ class Routes {
         this.express.use('/levels', Levels);
         this.express.get('/test',async (req,res,next)=>
         {
-            let tags= ["tournament","shana","everyone"]
+            let tags= ["photo"]
             DataController.getInstance().getArticles(tags).then(articles=>{
                 console.log(articles);
                 res.json(articles)
             })
         })
-        
+        this.express.get('/populate',(req,res,next)=>
+        {
+            MongooseController.getInstance().populateDB()
+        })  
 
     
     }
