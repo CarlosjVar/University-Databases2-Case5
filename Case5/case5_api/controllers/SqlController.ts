@@ -22,11 +22,11 @@ export class SqlController{
     * Request MSSQL for all articles that matches any of the tags in the array
     * @param tags 
     */
-    public getArticles(pHashtags : String[]) : void{
+    public async getArticles(pHashtags : String[]){
 
         let connection = this.connection
         
-        this.connection.on('connect', function(err){
+        var articles = await this.connection.on('connect', function(err){
             
             let logger = new Logger() 
             if (err) {
@@ -56,9 +56,10 @@ export class SqlController{
         
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
 
-            let constructedArticles : Article[]
-            constructedArticles = []
+
             request.on('doneInProc', function (rowCount, more, rows) {
+                let constructedArticles : Article[]
+                constructedArticles = []
                 logger.info(rowCount + " rows returned") 
                 /*
                 * TODO: Lógica de los result sets
@@ -66,28 +67,31 @@ export class SqlController{
                 var current = 0
                 rows.forEach(row => {
                     if (row.Id.value != current){
-                        current = row.Id.value
-                        var name = row.Name.value
-                        var author = row.Author.value
-                        var postTime = row.PostTime.value
-                        var sections = []
+                        current        = row.Id.value
+                        var name       = row.Name.value
+                        var author     = row.Author.value
+                        var postTime   = row.PostTime.value
+                        let sections   : {Content : String, ComponentType : Number}[]
+                        sections = []
                         let newArticle = new Article(name, author, postTime, sections)
                         constructedArticles.push(newArticle)
                     }
                     var lastIndex = constructedArticles.length - 1
                     constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
-                }) 
+                })   
+                return constructedArticles
             }) 
 
-            this.connection.callProcedure(request) 
-            
+            return connection.callProcedure(request)
+/*
+            logger.info(constructedArticles.length+"")       
             constructedArticles.forEach(article => {
-                article.toString()
-            });
-
+                logger.info(article.toString())
+            }); 
+*/
         })
 
-        //return articles 
+        return articles 
     }
     /**
      * Returns an instance of the class
