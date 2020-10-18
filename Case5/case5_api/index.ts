@@ -6,7 +6,6 @@ import { SqlController } from './controllers'
 const port = 3070;
 const logger = new Logger();
 
-let variable = SqlController.getInstance().getArticles(["catalina", "granblue", "sign"]).then(var => {console.log(var)});
 
 
     App.set('port', port);

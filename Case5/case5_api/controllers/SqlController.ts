@@ -22,11 +22,22 @@ export class SqlController{
     * Request MSSQL for all articles that matches any of the tags in the array
     * @param tags 
     */
-    public async getArticles(pHashtags : String[]){
+    public async getArticles(pHashtags : String[], callback){
 
         let connection = this.connection
+
+        var hashtagsTable = {
+            columns: [
+            {name: 'Hashtag', type: TYPES.VarChar, length: 100}
+            ],
+            rows: []
+        } 
+        for (var index = 0 ; index < pHashtags.length ; index++) {
+            var row = [pHashtags[index]] 
+            hashtagsTable.rows.push(row) 
+        }
         
-        var articles = await this.connection.on('connect', function(err){
+        let articles = await this.connection.on('connect', function(err){
             
             let logger = new Logger() 
             if (err) {
@@ -39,31 +50,16 @@ export class SqlController{
             var request = new Request("SP_GetHashtagsArticles", (err, rowCount, rows) => {
                 if (err) {
                     logger.error(err) 
-                } 
+                }
+                callback(err, constructedArticles)
             })
-
-            var hashtagsTable = {
-                columns: [
-                {name: 'Hashtag', type: TYPES.VarChar, length: 100}
-                ],
-                rows: []
-            } 
-
-            for (var index = 0 ; index < pHashtags.length ; index++) {
-                var row = [pHashtags[index]] 
-                hashtagsTable.rows.push(row) 
-            }
-        
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
 
 
+            let constructedArticles : Article[]
+            constructedArticles = []
+
             request.on('doneInProc', function (rowCount, more, rows) {
-                let constructedArticles : Article[]
-                constructedArticles = []
-                logger.info(rowCount + " rows returned") 
-                /*
-                * TODO: Lógica de los result sets
-                */
                 var current = 0
                 rows.forEach(row => {
                     if (row.Id.value != current){
@@ -78,17 +74,16 @@ export class SqlController{
                     }
                     var lastIndex = constructedArticles.length - 1
                     constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
-                })   
-                return constructedArticles
+                })
+                console.log(constructedArticles)
             }) 
 
-            return connection.callProcedure(request)
-/*
-            logger.info(constructedArticles.length+"")       
-            constructedArticles.forEach(article => {
-                logger.info(article.toString())
-            }); 
-*/
+            connection.callProcedure(request)
+            
+            console.log("Numero de filas: " + constructedArticles.length)       
+            console.log("Resultado: " + constructedArticles)
+            
+            return "constructedArticles"
         })
 
         return articles 

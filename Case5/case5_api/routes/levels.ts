@@ -1,6 +1,7 @@
 import * as express from 'express' 
 import { Logger } from '../common' 
 import Cache from '../common/cache/cache' 
+import { SqlController } from '../controllers'
 
 const logger = new Logger()
 const cache = Cache.getInstance() 
@@ -23,5 +24,14 @@ app.get('/get/:from/:to?', async (req, res) => {
   
   }
 ) 
+
+app.get('/test', async (req, res) => {
+  let variable = await SqlController.getInstance().getArticles(["catalina", "granblue", "sign"], function(results) {
+    console.log("Resultado de llamada: "+results);
+    
+  });
+  //logger.info(variable)
+  res.send("Hola")
+})
 
 export default app 
