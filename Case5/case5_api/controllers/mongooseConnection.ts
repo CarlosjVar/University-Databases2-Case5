@@ -100,7 +100,7 @@ export class MongooseController{
             let componentType = Number(sections[o]["ComponentType"])
             sect.push({Content:content,ComponentType:componentType})     
           }
-          let articleModel = new Article(article["Name"],article["Author"],article["PostTime"],sect,article["Hashtags"]);
+          let articleModel = new Article(article["Name"],article["Author"],article["PostTime"],sect);
           articlesLists.push(articleModel)
       }
       return articlesLists;
@@ -132,7 +132,7 @@ export class MongooseController{
       const Imagenes = 4 
       const Videos = 5 
 
-      for(var i= 0   i<20 i++)
+      for(var i= 0 ; i<20;i++)
       {    
           let tipo = getRandomArbitrary(0,5)
           

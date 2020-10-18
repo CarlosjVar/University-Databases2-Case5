@@ -1,7 +1,6 @@
 import { SqlConnection} from "../connections"
 import { Logger, Constants, Article} from '../common'
 
-
 var Request = require('tedious').Request
 var TYPES= require('tedious').TYPES 
 
@@ -22,13 +21,12 @@ export class SqlController{
     * Request MSSQL for all articles that matches any of the tags in the array
     * @param tags 
     */
-    public async getArticles(pHashtags : String[], callback){
+    public async getArticles(pHashtags : String[]){
 
         let connection = this.connection
 
         var hashtagsTable = {
-            columns: [
-            {name: 'Hashtag', type: TYPES.VarChar, length: 100}
+            columns: [{name: 'Hashtag', type: TYPES.VarChar, length: 100}
             ],
             rows: []
         } 
@@ -36,8 +34,10 @@ export class SqlController{
             var row = [pHashtags[index]] 
             hashtagsTable.rows.push(row) 
         }
+        
         let constructedArticles : Article[]
         constructedArticles = []
+
         this.connection.on('connect', function(err){
             
             let logger = new Logger() 
@@ -50,14 +50,11 @@ export class SqlController{
 
             var request = new Request("SP_GetHashtagsArticles", (err, rowCount, rows) => {
                 if (err) {
-                    callback(err);
-                } else {
-                    if (rowCount < 1) {
-                        callback(null, false);
-                    } else {
-                        callback(null, constructedArticles);
-                    }
-            }})
+                    logger.error(err) 
+                }
+                
+            })
+
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
 
             request.on('doneInProc', function (rowCount, more, rows) {
@@ -76,14 +73,16 @@ export class SqlController{
                     var lastIndex = constructedArticles.length - 1
                     constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
                 })
-            }) 
+            })
 
-            connection.callProcedure(request)
-                 
-            console.log("Pepito: " + constructedArticles)
-            
-            return "constructedArticles"
+            let promise = new Promise(function(resolve, reject) {
+                connection.callProcedure(request) 
+                resolve(constructedArticles)
+            })
+
+            promise.then(result => console.log(result))        
         })
+
     }
     /**
      * Returns an instance of the class

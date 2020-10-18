@@ -33,7 +33,7 @@ export class DataController{
     {
         let mongooseArticles = await  MongooseController.getInstance().getArticlesByTag(tags)
         //let sqlArticles = SqlController.getInstance().getArticles(tags)
-        let placeholder = [new Article("a","a","22222",[{Content:"a",ComponentType:1}],["a"])]
+        let placeholder = [new Article("a","a","22222",[{Content:"a",ComponentType:1}])]
         console.log(JSON.stringify (mongooseArticles,null,4));
         
         return placeholder
