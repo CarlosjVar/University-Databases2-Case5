@@ -30,19 +30,31 @@ export class DataController{
      * Gets all the articles mathing the provided tags in the 2 databases implemented
      * @param tags 
      */
-    public async getArticles(tags:Array<String>):Promise<Array<Article>>
+    public getArticles(tags:Array<String>)
     {
-        let mongooseArticles = await  MongooseController.getInstance().getArticlesByTag(tags)
-        let sqlArticles = await SqlController.getInstance().getArticles(tags,(err,results)=>
-        {
-            if(err)
+        let promiseDbs = new Promise((resolve, reject) => {
+
+            let mongooseArticles =  MongooseController.getInstance().getArticlesByTag(tags)
+            let sqlArticles = SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
             {
-                console.log(err);
-                
-            }
-            return results
+                let mergeResults =   mongooseArticles.then(mongos=>{
+                    resolve(sqlresult.concat(mongos))
+                }) ;
+       
+            })
+
         })
-        return mongooseArticles
+        
+        // let sqlArticles = await SqlController.getInstance().getArticles(tags,(err,results)=>
+        // {
+        //     if(err)
+        //     {
+        //         console.log(err);
+                
+        //     }
+        //     return results
+        // })
+        return promiseDbs
 
     }
    

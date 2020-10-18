@@ -1,7 +1,7 @@
 import * as express from 'express' 
 import { Logger } from '../common' 
 import Cache from '../common/cache/cache' 
-import { SqlController } from '../controllers'
+import { DataController, SqlController } from '../controllers'
 
 const logger = new Logger()
 const cache = Cache.getInstance() 
@@ -12,12 +12,17 @@ app.get('/get/:from/:to?', async (req, res) => {
 
   var getAsynchronous = async function(){
     logger.info(`level ranges`) 
-    if(req.params.to){
-      return cache.redisGet(req.params.to) 
+    let result = Cache.getInstance().redisGet(req.params.from + req.params.to)
+    if(result){
+      res.json(result)
     }
-    else{ 
-      return cache.redisGet(req.params.from) 
-    }    
+    else
+    {
+      DataController.getInstance().getArticles(["granblue"]).then(articles=>
+        {
+          //Cache.getInstance().redisSet(req.params.from + req.params.to,articles)
+        })
+    }
   }
 
   getAsynchronous().then(val=>res.send(val))

@@ -32,9 +32,10 @@ class Routes {
         this.express.get('/test',async (req,res,next)=>
         {
             let tags= ["tournament","shana","everyone"]
-            let result = await DataController.getInstance().getArticles(tags)
-            //console.log(result);
-             res.json(result)
+            DataController.getInstance().getArticles(tags).then(articles=>{
+                console.log(articles);
+                res.json(articles)
+            })
         })
         
 
