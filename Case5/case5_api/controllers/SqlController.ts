@@ -79,10 +79,6 @@ export class SqlController{
             }) 
 
             connection.callProcedure(request)
-                 
-            console.log("Pepito: " + constructedArticles)
-            
-            return "constructedArticles"
         })
     }
     /**

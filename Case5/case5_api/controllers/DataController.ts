@@ -2,6 +2,7 @@ import {MongooseController} from './mongooseConnection'
 import {SqlController}  from '../controllers'
 import {Logger,Article} from '../common'
 import {elasticController} from './elasticConnection'
+import { mongo } from 'mongoose'
 /**
  * Class made to implement database agnosticism
  */
@@ -32,11 +33,17 @@ export class DataController{
     public async getArticles(tags:Array<String>):Promise<Array<Article>>
     {
         let mongooseArticles = await  MongooseController.getInstance().getArticlesByTag(tags)
-        //let sqlArticles = SqlController.getInstance().getArticles(tags)
-        let placeholder = [new Article("a","a","22222",[{Content:"a",ComponentType:1}],["a"])]
-        console.log(JSON.stringify (mongooseArticles,null,4));
-        
-        return placeholder
+        let sqlArticles = await SqlController.getInstance().getArticles(tags,(err,results)=>
+        {
+            if(err)
+            {
+                console.log(err);
+                
+            }
+            return results
+        })
+        return mongooseArticles
+
     }
    
 
