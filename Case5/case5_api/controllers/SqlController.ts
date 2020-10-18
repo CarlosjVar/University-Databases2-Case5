@@ -1,6 +1,6 @@
 import { SqlConnection} from "../connections"
-import { Logger, Constants, Article } from '../common'
-import webpackConfig = require("../webpack.config") 
+import { Logger, Constants, Article} from '../common'
+
 
 var Request = require('tedious').Request
 var TYPES= require('tedious').TYPES 
@@ -22,12 +22,24 @@ export class SqlController{
     * Request MSSQL for all articles that matches any of the tags in the array
     * @param tags 
     */
-    public getArticles(pHashtags : String[]) : Article[]{
-        
-        let connection = this.connection
-        let articles = [] 
+    public async getArticles(pHashtags : String[], callback){
 
+        let connection = this.connection
+
+        var hashtagsTable = {
+            columns: [
+            {name: 'Hashtag', type: TYPES.VarChar, length: 100}
+            ],
+            rows: []
+        } 
+        for (var index = 0 ; index < pHashtags.length ; index++) {
+            var row = [pHashtags[index]] 
+            hashtagsTable.rows.push(row) 
+        }
+        let constructedArticles : Article[]
+        constructedArticles = []
         this.connection.on('connect', function(err){
+            
             let logger = new Logger() 
             if (err) {
                 logger.error(err) 
@@ -38,47 +50,40 @@ export class SqlController{
 
             var request = new Request("SP_GetHashtagsArticles", (err, rowCount, rows) => {
                 if (err) {
-                    logger.error(err) 
-                } 
-            }) 
-
-            var hashtagsTable = {
-                columns: [
-                  {name: 'Hashtag', type: TYPES.VarChar, length: 100}
-                ],
-                rows: []
-            } 
-
-            for (var index = 0 ; index < pHashtags.length ; index++) {
-                var row = [pHashtags[index]] 
-                hashtagsTable.rows.push(row) 
-            }
-          
+                    callback(err);
+                } else {
+                    if (rowCount < 1) {
+                        callback(null, false);
+                    } else {
+                        callback(null, constructedArticles);
+                    }
+            }})
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
 
-            var constructedArticles = []
             request.on('doneInProc', function (rowCount, more, rows) {
-                logger.info(rowCount + " rows returned") 
-                /*
-                * TODO: Lógica de los result sets
-                */
                 var current = 0
                 rows.forEach(row => {
-                    logger.info(row) 
-                }) 
+                    if (row.Id.value != current){
+                        current        = row.Id.value
+                        var name       = row.Name.value
+                        var author     = row.Author.value
+                        var postTime   = row.PostTime.value
+                        let sections   : {Content : String, ComponentType : Number}[]
+                        sections = []
+                        let newArticle = new Article(name, author, postTime, sections)
+                        constructedArticles.push(newArticle)
+                    }
+                    var lastIndex = constructedArticles.length - 1
+                    constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
+                })
             }) 
 
-            request.on('error', function (err) {
-                logger.error(err)
-             }) 
-
-            connection.callProcedure(request) 
-
-            articles = constructedArticles 
+            connection.callProcedure(request)
+                 
+            console.log("Pepito: " + constructedArticles)
             
+            return "constructedArticles"
         })
-
-        return articles 
     }
     /**
      * Returns an instance of the class
