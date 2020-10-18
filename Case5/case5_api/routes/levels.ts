@@ -7,7 +7,7 @@ const logger = new Logger()
 const cache = Cache.getInstance() 
 
 const app = express() 
-
+//Request principal
 app.get('/get/:from/:to?', async (req, res) => {
 
   var getAsynchronous = async function(){
@@ -21,6 +21,7 @@ app.get('/get/:from/:to?', async (req, res) => {
       DataController.getInstance().getArticles(["granblue"]).then(articles=>
         {
           //Cache.getInstance().redisSet(req.params.from + req.params.to,articles)
+          res.json(articles)
         })
     }
   }
@@ -32,7 +33,19 @@ app.get('/get/:from/:to?', async (req, res) => {
 
 app.get('/test', async (req, res) => {
   let asd = []
-  SqlController.getInstance().getArticles(["catalina", "granblue", "sign"])
+  let result = await SqlController.getInstance().getArticles(["catalina", "granblue", "sign"], function(err, results) {
+    if(err){
+      console.log(err);
+    }
+  }).then((results) =>{
+      return results;
+  });
+  console.log("Ultimo print =================================================");
+  
+  console.log(result);
+  
+  //logger.info(variable)
+  res.send("Hola")
 })
 
 export default app 
