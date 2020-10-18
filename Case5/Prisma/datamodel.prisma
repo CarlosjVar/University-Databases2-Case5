@@ -1,0 +1,30 @@
+type Article @db(name: "Articles") {
+  id: ID! @id
+  author: String @db(name: "Author")
+  media: [ArticleMedia] 
+  name: String @db(name: "Name")
+  postTime: String @db(name: "PostTime")
+  subtitles: [ArticleSubtitle] 
+  texts: [ArticleText] 
+  titles: [ArticleTitle] 
+}
+
+type ArticleMedia @embedded {
+  position: Int @db(name: "Position:")
+  url: String
+}
+
+type ArticleSubtitle @embedded {
+  position: Int @db(name: "Position:")
+  subitle: String @db(name: "Subitle")
+}
+
+type ArticleText @embedded {
+  position: Int @db(name: "Position:")
+  text: String @db(name: "Text")
+}
+
+type ArticleTitle @embedded {
+  position: Int @db(name: "Position:")
+  title: String @db(name: "Title")
+}
