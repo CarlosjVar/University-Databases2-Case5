@@ -29,10 +29,12 @@ class Routes {
     private routes(): void {
 
         this.express.use('/levels', Levels);
-        this.express.get('/test',(req,res,next)=>
+        this.express.get('/test',async (req,res,next)=>
         {
             let tags= ["tournament","shana","everyone"]
-            DataController.getInstance().getArticles(tags)
+            let result = await DataController.getInstance().getArticles(tags)
+            //console.log(result);
+             res.json(result)
         })
         
 

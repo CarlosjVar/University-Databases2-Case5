@@ -132,29 +132,29 @@ export class MongooseController{
       const Imagenes = 4 
       const Videos = 5 
 
-      for(var i= 0 ; i<20;i++)
+      for(var i= 0 ; i<20 ;i++)
       {    
           let tipo = getRandomArbitrary(0,5)
           
           switch (Math.trunc(tipo)){
               case 0:
                   // crea título
-                  sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Titulo})
+                  sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length-1))],ComponentType:Titulo})
                   break 
               case 1:
-                sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length))],ComponentType:Subtitulo})
+                sections.push({Content:nombres[Math.trunc(getRandomArbitrary(0,nombres.length-1))],ComponentType:Subtitulo})
                   //crea subtitulo
                   break
               case 2:
-                sections.push({Content:texto[Math.trunc(getRandomArbitrary(0,texto.length))],ComponentType:Textoo})
+                sections.push({Content:texto[Math.trunc(getRandomArbitrary(0,texto.length-1))],ComponentType:Textoo})
                   break
                   //crea text
               case 3:
-                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Imagenes})
+                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length-1))],ComponentType:Imagenes})
                   //crea media
                   break
               case 4:
-                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length))],ComponentType:Videos})
+                sections.push({Content:media[Math.trunc(getRandomArbitrary(0,media.length-1))],ComponentType:Videos})
                   //crea media
                   break
 
