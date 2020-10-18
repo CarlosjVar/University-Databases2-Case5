@@ -26,10 +26,18 @@ app.get('/get/:from/:to?', async (req, res) => {
 ) 
 
 app.get('/test', async (req, res) => {
-  let variable = await SqlController.getInstance().getArticles(["catalina", "granblue", "sign"], function(results) {
-    console.log("Resultado de llamada: "+results);
-    
+  let asd = []
+  let result = await SqlController.getInstance().getArticles(["catalina", "granblue", "sign"], function(err, results) {
+    if(err){
+      console.log(err);
+    }
+  }).then((results) =>{
+      return results;
   });
+  console.log("Ultimo print =================================================");
+  
+  console.log(result);
+  
   //logger.info(variable)
   res.send("Hola")
 })

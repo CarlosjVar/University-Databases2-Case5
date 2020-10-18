@@ -1,6 +1,6 @@
 import { SqlConnection} from "../connections"
 import { Logger, Constants, Article} from '../common'
-import webpackConfig = require("../webpack.config") 
+
 
 var Request = require('tedious').Request
 var TYPES= require('tedious').TYPES 
@@ -36,8 +36,9 @@ export class SqlController{
             var row = [pHashtags[index]] 
             hashtagsTable.rows.push(row) 
         }
-        
-        let articles = await this.connection.on('connect', function(err){
+        let constructedArticles : Article[]
+        constructedArticles = []
+        this.connection.on('connect', function(err){
             
             let logger = new Logger() 
             if (err) {
@@ -49,15 +50,15 @@ export class SqlController{
 
             var request = new Request("SP_GetHashtagsArticles", (err, rowCount, rows) => {
                 if (err) {
-                    logger.error(err) 
-                }
-                callback(err, constructedArticles)
-            })
+                    callback(err);
+                } else {
+                    if (rowCount < 1) {
+                        callback(null, false);
+                    } else {
+                        callback(null, constructedArticles);
+                    }
+            }})
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
-
-
-            let constructedArticles : Article[]
-            constructedArticles = []
 
             request.on('doneInProc', function (rowCount, more, rows) {
                 var current = 0
@@ -75,18 +76,14 @@ export class SqlController{
                     var lastIndex = constructedArticles.length - 1
                     constructedArticles[lastIndex].Sections.push({Content: row.Content.value, ComponentType: row.ComponentTypeId.value})
                 })
-                console.log(constructedArticles)
             }) 
 
             connection.callProcedure(request)
-            
-            console.log("Numero de filas: " + constructedArticles.length)       
-            console.log("Resultado: " + constructedArticles)
+                 
+            console.log("Pepito: " + constructedArticles)
             
             return "constructedArticles"
         })
-
-        return articles 
     }
     /**
      * Returns an instance of the class
