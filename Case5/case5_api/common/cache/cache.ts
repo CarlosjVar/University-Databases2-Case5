@@ -21,7 +21,7 @@ export class Cache {
   }
 
   public async redisGet(key: string){
-    return (await this.tedisCache).get(`${key}`) 
+    return (await this.tedisCache).get(`${key}`).then(value=>{return value});
   }
 
   // Se podría meter a un try-catch para ver que esté funcionando

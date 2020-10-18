@@ -1,5 +1,5 @@
-import {Logger, Articles} from '../common'
-import * as mongoose from 'mongoose' 
+import {Logger, Articles,Article} from '../common'
+import * as mongoose from 'mongoose';
 /**
  * Gets a truncated int in the provided ranges
  * @param min 
@@ -77,13 +77,38 @@ export class MongooseController{
    * Request mongo for all articles that matches any of the tags in the array
    * @param tags 
    */
-  public getArticlesByTag(tags:any){
-    Articles.find({"Hashtags":{"$in":tags}},(err,articles)=>
+  public async getArticlesByTag(tags:any){
+    var articlesList = await Articles.find({"Hashtags":{"$in":tags}},function(err,results)
     {
-        if (err) return console.error(err) 
-        console.log(JSON.stringify(articles,null,4)) 
-    })
+        if(err)
+        {
+          console.log(err);
+          
+        }
+        
+    }).then((articlesList) =>{
+     
+
+        var articlesLists = [];
+        for (var i in articlesList){
+          let article=JSON.parse(JSON.stringify(articlesList[i]));
+          let sections = article["Sections"]
+          let sect = []
+          for (var o in sections )
+          {
+            let content =String(sections[o]["Content"])
+            let componentType = Number(sections[o]["ComponentType"])
+            sect.push({Content:content,ComponentType:componentType})     
+          }
+          let articleModel = new Article(article["Name"],article["Author"],article["PostTime"],sect,article["Hashtags"]);
+          articlesLists.push(articleModel)
+      }
+      return articlesLists;
+    });
+    return articlesList;
+    
   }
+  
   /**
    * Method to randomly populate the mongo datanase
    */
