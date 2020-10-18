@@ -20,7 +20,7 @@ app.get('/get/:from/:to?', async (req, res) => {
     {
       DataController.getInstance().getArticles(["granblue"]).then(articles=>
         {
-          //Cache.getInstance().redisSet(req.params.from + req.params.to,articles)
+          Cache.getInstance().redisSet(req.params.from + req.params.to,JSON.stringify(articles))
           res.json(articles)
         })
     }

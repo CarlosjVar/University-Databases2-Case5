@@ -39,7 +39,7 @@ export class SqlController{
         let constructedArticles : Article[]
         constructedArticles = []
         this.connection.on('connect', function(err){
-            
+            //AQUÍ SE PRODUCE EL ERROR
             let logger = new Logger() 
             if (err) {
                 logger.error(err) 
@@ -59,7 +59,6 @@ export class SqlController{
                     }
             }})
             request.addParameter('pHashtags', TYPES.TVP, hashtagsTable) 
-
             request.on('doneInProc', function (rowCount, more, rows) {
                 var current = 0
                 rows.forEach(row => {
@@ -79,6 +78,13 @@ export class SqlController{
             }) 
 
             connection.callProcedure(request)
+        })
+        this.connection.on('error',(err)=>
+        {   
+            console.log("ERROR ERROR SQL ERROR ERROR");
+            
+            console.log(err);
+            
         })
     }
     /**
