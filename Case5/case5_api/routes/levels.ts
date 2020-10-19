@@ -23,11 +23,6 @@ app.get('/get/:from/:to?', async (req, res) => {
   
   }
 )
-app.get('/elastic',(req,res,next)=>
-{
-  Cache.getInstance().redisSet("A","Patazo")
- 
-}) 
 
 
 
