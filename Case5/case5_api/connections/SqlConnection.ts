@@ -3,12 +3,10 @@ var Connection = require('tedious').Connection
 
 export class SqlConnection {
 
-    private static instance: SqlConnection 
     public connection 
 
-    private constructor() 
-    {
-        
+    constructor() 
+    {  
         var config = {
             server: 'host.docker.internal',
             port: Number(process.env.PORT),
@@ -31,12 +29,4 @@ export class SqlConnection {
         this.connection = new Connection(config)
  
     }
-
-    public static getInstance(): SqlConnection {
-        if (!SqlConnection.instance) {
-            SqlConnection.instance = new SqlConnection() 
-        }
-        return SqlConnection.instance 
-    }
-
 }
