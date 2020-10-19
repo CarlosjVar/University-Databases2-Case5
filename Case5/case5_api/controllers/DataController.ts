@@ -2,7 +2,7 @@ import {MongooseController} from './mongooseConnection'
 import {SqlController}  from '../controllers'
 import {Logger,Article} from '../common'
 import {elasticController} from './elasticConnection'
-import { mongo } from 'mongoose'
+import {Cache} from '../common'
 /**
  * Class made to implement database agnosticism
  */
@@ -30,7 +30,7 @@ export class DataController{
      * Gets all the articles mathing the provided tags in the 2 databases implemented
      * @param tags 
      */
-    public getArticles(tags:Array<String>)
+    public getArticlesFromDb(tags:Array<String>)
     {
         let promiseDbs = new Promise((resolve, reject) => {
 
@@ -47,8 +47,31 @@ export class DataController{
         })
 
         return promiseDbs
-
     }
-   
+   public async getArticles(minLevel,maxLevel)
+   {
+        if(!maxLevel)
+        {
+            maxLevel = minLevel;
+        }
+        let cacheResult = await Cache.getInstance().redisGet(String(minLevel)+String(maxLevel))
+
+        
+        
+        if(cacheResult)
+        {
+            this.log.info("Existía en cache")
+            return cacheResult;
+        }
+        else{
+            this.log.info("No existía en cache")
+            let levelsTags = elasticController.getInstance().getLevelTags(minLevel,maxLevel);
+            let articles = this.getArticlesFromDb(levelsTags)
+
+        }
+
+
+
+   }
 
 }

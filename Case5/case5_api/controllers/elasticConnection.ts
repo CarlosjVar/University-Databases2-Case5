@@ -11,7 +11,7 @@ export class elasticController{
     private constructor(){
         this.log = new Logger() 
         this.client = new elasticsearch.Client( {
-            host:'25.10.118.245:9200'
+            host:'host.docker.internal:9200'
         }) 
     }
     /**
@@ -34,14 +34,36 @@ export class elasticController{
         size:0,
         index: 'palabras',
         body:{
-        "aggs":
-        {   
-            "aggs":{
-                "cuenta":{
-                    sum : { "field" : "palabra.keyword"},
-                }          
-            } 
-        }
+            "aggs": {          
+                "palabras_count": {
+                    "terms": {
+                        "field": "palabra.keyword",
+                        "size" : 20
+                    },
+                    "aggs" : {
+                        "hashtags" : {
+                            "bucket_selector" : {
+                                "buckets_path": {
+                                    "cuenta": "_count"
+                                },
+                                "script" :{
+                                    "source": "params.cuenta<400 && params.cuenta>300"
+                                }
+                            }
+                        }
+                    }
+                },
+                "max_palabra": {
+                    "max_bucket": {
+                        "buckets_path": "palabras_count>_count" 
+                    }
+                },
+                "min_palabra": {
+                    "min_bucket": {
+                        "buckets_path": "palabras_count>_count"
+                    }               
+                }     
+            }  
         }
         }).then((resp,error)=>{
             if(error)
@@ -53,12 +75,12 @@ export class elasticController{
         })
         return tags 
     }
-    public getLevelTags(min,max)
+    public getLevelTags(min,max):Array<String>
     {
         const hashtagsEscogidos: any[] = []
         this.client.search({
             index:'palabras',
-            size:500,
+            size:0,
             body: {
                 "aggs":{
                     // Saca la cuenta de las palabras
@@ -101,7 +123,10 @@ export class elasticController{
                         hashtagsEscogidos.push(hit.key);
                     }});
                 console.log(hashtagsEscogidos);
+
             }
+        return hashtagsEscogidos
         })
+        return hashtagsEscogidos
     }
 }

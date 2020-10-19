@@ -27,7 +27,6 @@ function shuffle(array) {
   array[currentIndex] = array[randomIndex] 
   array[randomIndex] = temporaryValue 
   }
-
 }
 /**
  * Class in charge of handling all the requests to mongodb

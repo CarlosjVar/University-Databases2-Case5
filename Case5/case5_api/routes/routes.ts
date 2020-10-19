@@ -29,18 +29,11 @@ class Routes {
     private routes(): void {
 
         this.express.use('/levels', Levels);
-        this.express.get('/test',async (req,res,next)=>
-        {
-            let tags= ["photo"]
-            DataController.getInstance().getArticles(tags).then(articles=>{
-                console.log(articles);
-                res.json(articles)
-            })
-        })
         this.express.get('/populate',(req,res,next)=>
         {
             MongooseController.getInstance().populateDB()
-        })  
+        }) 
+        
 
     
     }
