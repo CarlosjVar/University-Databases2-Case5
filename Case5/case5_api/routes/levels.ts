@@ -23,7 +23,13 @@ app.get('/get/:from/:to?', async (req, res) => {
 )
 app.get('/elastic',(req,res,next)=>
 {
-  elasticController.getInstance().getTagCount();
+ elasticController.getInstance().getMaxMin(1,1).then(tags=>
+  {
+    //console.log(tags);
+
+    
+  })
+ 
 }) 
 
 

@@ -65,8 +65,10 @@ export class DataController{
         }
         else{
             this.log.info("No existía en cache")
-            let levelsTags = elasticController.getInstance().getLevelTags(minLevel,maxLevel);
-            let articles = this.getArticlesFromDb(levelsTags)
+            let MinMaxTags = elasticController.getInstance().getMaxMin(minLevel,maxLevel)
+            console.log(MinMaxTags);
+            
+            //let articles = this.getArticlesFromDb(levelsTags)
 
         }
 
