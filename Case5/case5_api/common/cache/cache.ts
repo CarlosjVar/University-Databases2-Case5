@@ -21,12 +21,32 @@ export class Cache {
   }
 
   public async redisGet(key: string){
-    return (await this.tedisCache).get(`${key}`).then(value=>{return value});
+
+    let promise = new Promise((resolve,reject)=>
+    {
+      this.tedisCache.exists(key).then(val=>{
+        if(val==0)
+        {
+          console.log("No existe");
+          
+          resolve(null);
+        }
+        else
+        {
+          resolve ((this.tedisCache).get(`${key}`).then(value=>{return value}));
+        }
+      });
+     
+    })
+
+    return promise
   }
+
 
   // Se podría meter a un try-catch para ver que esté funcionando
   public async redisSet(key: string, value: string){
     (await this.tedisCache).set(key, value) 
+    this.tedisCache.pexpire(key,6000*10*5)
   }
 
 }

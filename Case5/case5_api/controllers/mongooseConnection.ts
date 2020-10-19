@@ -27,7 +27,6 @@ function shuffle(array) {
   array[currentIndex] = array[randomIndex] 
   array[randomIndex] = temporaryValue 
   }
-
 }
 /**
  * Class in charge of handling all the requests to mongodb
@@ -91,6 +90,8 @@ export class MongooseController{
 
         var articlesLists = [];
         for (var i in articlesList){
+          console.log("articulo");
+          
           let article=JSON.parse(JSON.stringify(articlesList[i]));
           let sections = article["Sections"]
           let sect = []

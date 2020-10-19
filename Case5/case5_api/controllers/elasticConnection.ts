@@ -11,7 +11,7 @@ export class elasticController{
     private constructor(){
         this.log = new Logger() 
         this.client = new elasticsearch.Client( {
-            host:'25.10.118.245:9200'
+            host:'host.docker.internal:9200'
         }) 
     }
     /**
@@ -28,80 +28,100 @@ export class elasticController{
     /**
      * Asks elastic' index for the tags included in the level requested
      */
-    public getTagCount()
-    {   let tags 
-        this.client.search({
-        size:0,
-        index: 'palabras',
-        body:{
-        "aggs":
-        {   
-            "aggs":{
-                "cuenta":{
-                    sum : { "field" : "palabra.keyword"},
-                }          
-            } 
-        }
-        }
-        }).then((resp,error)=>{
-            if(error)
-            {
-                this.log.error(error)
-            }
-            this.log.info(JSON.stringify(resp,null,4))
-            tags = resp 
-        })
-        return tags 
-    }
-    public getLevelTags(min,max)
-    {
-        const hashtagsEscogidos: any[] = []
-        this.client.search({
-            index:'palabras',
-            size:500,
-            body: {
-                "aggs":{
-                    // Saca la cuenta de las palabras
-                    "cuenta_palabras": {
-                            "terms":{
-                                "field": "palabra.keyword",
-                                "size":100
+    public getTags(minlvl,maxlvl)
+    {   
+        
+        let promise = new Promise((resolve, reject)=>
+        {
+            let tags 
+            this.client.search({
+            size:0,
+            index: 'palabras',
+            body:{
+                "aggs": {          
+                    "palabras_count": {
+                        "terms": {
+                            "field": "palabra.keyword",
+                            "size" : 20
+                        },
+                        "aggs" : {
+                            "hashtags" : {
+                                "bucket_selector" : {
+                                    "buckets_path": {
+                                        "cuenta": "_count"
+                                    },
+                                    "script" :{
+                                        "source": "params.cuenta>10"
+                                    }
+                                }
                             }
-                    },
-                    "valor_maximo": {
-                        "max_bucket":{
-                            "buckets_path": "cuenta_palabras._count"
                         }
                     },
-                    "valor_minimo": {
-                        "min_bucket":{
-                            "buckets_path": "cuenta_palabras._count"
+                    "max_palabra": {
+                        "max_bucket": {
+                            "buckets_path": "palabras_count>_count" 
+                        }
+                    },
+                    "min_palabra": {
+                        "min_bucket": {
+                            "buckets_path": "palabras_count>_count"
+                        }               
+                    }       
+                }  
+            }
+            }).then((resp,error)=>{
+                if(error)
+                {
+                    this.log.error(error)
+                }
+                tags = resp
+                let max =tags.aggregations.max_palabra.value+1;
+                let min =  tags.aggregations.min_palabra.value;
+                let levelmin = ((minlvl-1)*((max-min)/10))+min
+                let levelmax = ((maxlvl)*(max-min)/10)+min
+                console.log("max",max,"min",min);
+                
+                this.client.search({
+                    size:0,
+                    index: 'palabras',
+                    body:{
+                        "aggs": {          
+                            "palabras_count": {
+                                "terms": {
+                                    "field": "palabra.keyword",
+                                    "size" : 20
+                                },
+                                "aggs" : {
+                                    "hashtags" : {
+                                        "bucket_selector" : {
+                                            "buckets_path": {
+                                                "cuenta": "_count"
+                                            },
+                                            
+                                            "script" :{
+                                                "params": {
+                                                    "levelmin":levelmin,
+                                                    "levelmax":levelmax
+                                                  },
+                                                "source": "params.cuenta>=params.levelmin && params.cuenta<params.levelmax"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                },
-                
-            }
-        },(error,response,status) =>
-        {
-            if(error){
-                console.log(error)
-            }
-            else
-            {
-                console.log("--- Hits ---");
-                const valorPorNivel = Math.round((response.aggregations.valor_maximo.value - response.aggregations.valor_minimo.value) /NIVEL_MAX);
-                const minHashtags = (NIVEL_MAX - max)*valorPorNivel;
-                const maxHashtags = (NIVEL_MAX - min + 1 )*valorPorNivel;
-      
-                console.log(minHashtags,maxHashtags, response.aggregations.valor_maximo.value,response.aggregations.valor_minimo.value);
-            
-                response.aggregations.cuenta_palabras.buckets.forEach(function(hit){
-                    if (hit.doc_count >= minHashtags && hit.doc_count <= maxHashtags){
-                        console.log(hit.key,hit.doc_count);
-                        hashtagsEscogidos.push(hit.key);
-                    }});
-                console.log(hashtagsEscogidos);
-            }
+                }).then((resultados)=>
+                    {       
+                        
+                        
+                        resolve(resultados.aggregations.palabras_count.buckets)
+                        
+                    })
+            })
         })
+
+        return promise
     }
+   
 }
