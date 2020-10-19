@@ -28,7 +28,7 @@ export class elasticController{
     /**
      * Asks elastic' index for the tags included in the level requested
      */
-    public getMaxMin(minlvl,maxlvl)
+    public getTags(minlvl,maxlvl)
     {   
         
         let promise = new Promise((resolve, reject)=>
@@ -75,11 +75,10 @@ export class elasticController{
                     this.log.error(error)
                 }
                 tags = resp
-                let max =tags.aggregations.max_palabra.value;
+                let max =tags.aggregations.max_palabra.value+1;
                 let min =  tags.aggregations.min_palabra.value;
-                let offset = 37
-                let levelmin = ((minlvl)*((max-min)/10))+min-offset
-                let levelmax = ((maxlvl+1)*(max-min)/10)+min-offset
+                let levelmin = ((minlvl-1)*((max-min)/10))+min
+                let levelmax = ((maxlvl)*(max-min)/10)+min
                 console.log("max",max,"min",min);
                 
                 this.client.search({
@@ -104,7 +103,7 @@ export class elasticController{
                                                     "levelmin":levelmin,
                                                     "levelmax":levelmax
                                                   },
-                                                "source": "params.cuenta>=params.levelmin && params.cuenta<=params.levelmax"
+                                                "source": "params.cuenta>=params.levelmin && params.cuenta<params.levelmax"
                                             }
                                         }
                                     }
@@ -113,17 +112,12 @@ export class elasticController{
                         }
                     }
                 }).then((resultados)=>
-                    {   
-                        console.log(levelmin);
-                        console.log(levelmax);
+                    {       
                         
                         
-                        console.log(resultados.aggregations.palabras_count.buckets);
+                        resolve(resultados.aggregations.palabras_count.buckets)
                         
                     })
-
-                
-                resolve(tags)
             })
         })
 

@@ -49,28 +49,43 @@ export class DataController{
         return promiseDbs
     }
    public async getArticles(minLevel,maxLevel)
-   {
+   {    let promise = new Promise((resolve,reject)=>
+    {
+
         if(!maxLevel)
         {
             maxLevel = minLevel;
         }
-        let cacheResult = await Cache.getInstance().redisGet(String(minLevel)+String(maxLevel))
-
+        Cache.getInstance().redisGet(String(minLevel)+String(maxLevel)).then(existe=>
+            {
+                if(existe)
+                {
+                    this.log.info("Existía en cache")
+                    resolve(existe);
+                }
+                else{
+                    this.log.info("No existía en cache")
+                    let MinMaxTags = elasticController.getInstance().getTags(minLevel,maxLevel).then(tags =>
+                        {   
+                            
+                            let hashtags =Object.keys(tags).map((key)=>tags[key]['key'])
+                            
+                            
+                            this.getArticlesFromDb(hashtags).then(articles =>
+                                {
+                                    Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),JSON.stringify(articles))
+                                    resolve(articles)
+                                })
         
+                        })
+                    
+                    
         
-        if(cacheResult)
-        {
-            this.log.info("Existía en cache")
-            return cacheResult;
-        }
-        else{
-            this.log.info("No existía en cache")
-            let MinMaxTags = elasticController.getInstance().getMaxMin(minLevel,maxLevel)
-            console.log(MinMaxTags);
-            
-            //let articles = this.getArticlesFromDb(levelsTags)
+                }
+            })
 
-        }
+    }) 
+    return promise       
 
 
 

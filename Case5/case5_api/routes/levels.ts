@@ -12,23 +12,20 @@ const app = express()
 //Request principal
 app.get('/get/:from/:to?', async (req, res) => {
 
-  var getAsynchronous = async function(){
+  
     logger.info(`level ranges`) 
-    let result = DataController.getInstance().getArticles(req.params.from,req.params.to)
-  }
+    DataController.getInstance().getArticles(req.params.from,req.params.to).then(articles=>
+      {
+        res.json(articles)
+      })
+  
 
-  getAsynchronous().then(val=>res.send(val))
   
   }
 )
 app.get('/elastic',(req,res,next)=>
 {
- elasticController.getInstance().getMaxMin(1,1).then(tags=>
-  {
-    //console.log(tags);
-
-    
-  })
+  Cache.getInstance().redisSet("A","Patazo")
  
 }) 
 
