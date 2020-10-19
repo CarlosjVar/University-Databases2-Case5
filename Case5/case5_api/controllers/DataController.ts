@@ -37,9 +37,24 @@ export class DataController{
             let mongooseArticles =  MongooseController.getInstance().getArticlesByTag(tags)
             let sqlArticles = SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
             {
-                
                 let mergeResults =   mongooseArticles.then(mongos=>{
-                    resolve(sqlresult.concat(mongos))
+                    if((mongos.length!=0) && (sqlresult.lenght!=0))
+                    {
+                        resolve(sqlresult.concat(mongos))
+                    }
+                    else if (mongos.length != 0)
+                    {
+                        resolve(mongos)
+                    }
+                    else if (sqlresult.lenght!=0)
+                    {
+                        resolve(sqlresult)
+                    }
+                    else
+                    {
+                        resolve("No hay resultados")
+                    }
+                  
                 }) ;
                 
             })
@@ -60,7 +75,6 @@ export class DataController{
             {
                 if(existe)
                 {
-                    this.log.info("Existía en cache")
                     resolve(existe);
                 }
                 else{
@@ -70,10 +84,13 @@ export class DataController{
                             
                             let hashtags =Object.keys(tags).map((key)=>tags[key]['key'])
                             
-                            
+                            if(hashtags.length==0)
+                            {
+                                resolve("No existe")
+                            }
                             this.getArticlesFromDb(hashtags).then(articles =>
                                 {
-                                    Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),JSON.stringify(articles))
+                                    Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),(JSON.stringify(JSON.parse(JSON.stringify(articles)))))
                                     resolve(articles)
                                 })
         

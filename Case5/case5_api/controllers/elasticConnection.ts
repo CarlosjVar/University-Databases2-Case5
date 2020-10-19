@@ -79,7 +79,6 @@ export class elasticController{
                 let min =  tags.aggregations.min_palabra.value;
                 let levelmin = ((minlvl-1)*((max-min)/10))+min
                 let levelmax = ((maxlvl)*(max-min)/10)+min
-                console.log("max",max,"min",min);
                 
                 this.client.search({
                     size:0,

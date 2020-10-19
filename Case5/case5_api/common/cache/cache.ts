@@ -33,7 +33,7 @@ export class Cache {
         }
         else
         {
-          resolve ((this.tedisCache).get(`${key}`).then(value=>{return value}));
+          resolve ((this.tedisCache).get(`${key}`).then(value=>{return JSON.parse(String(value))}));
         }
       });
      
@@ -44,7 +44,7 @@ export class Cache {
 
 
   // Se podría meter a un try-catch para ver que esté funcionando
-  public async redisSet(key: string, value: string){
+  public async redisSet(key: string, value){
     (await this.tedisCache).set(key, value) 
     this.tedisCache.pexpire(key,6000*10*5)
   }
