@@ -37,10 +37,11 @@ export class DataController{
             let mongooseArticles =  MongooseController.getInstance().getArticlesByTag(tags)
             let sqlArticles = SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
             {
+                
                 let mergeResults =   mongooseArticles.then(mongos=>{
                     resolve(sqlresult.concat(mongos))
                 }) ;
-       
+                
             })
 
         })
