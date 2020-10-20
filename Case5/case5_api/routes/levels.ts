@@ -15,12 +15,9 @@ app.get('/get/:from/:to?', async (req, res) => {
   
     logger.info(`level ranges`) 
     DataController.getInstance().getArticles(req.params.from,req.params.to).then(articles=>
-      {
-        res.json(articles)
-      })
-  
-
-  
+    {
+      res.json(articles)
+    })
   }
 )
 

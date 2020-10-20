@@ -6,8 +6,6 @@ import { SqlController } from './controllers'
 const port = 3070;
 const logger = new Logger();
 
-
-
     App.set('port', port);
     const server = http.createServer(App);
     server.listen(port);

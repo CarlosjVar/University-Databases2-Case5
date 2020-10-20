@@ -1,4 +1,4 @@
-import {Logger} from '../common'
+import {Logger, Constants} from '../common'
 var elasticsearch=require('elasticsearch');
 const NIVEL_MAX = 10
 /**
@@ -11,7 +11,7 @@ export class elasticController{
     private constructor(){
         this.log = new Logger() 
         this.client = new elasticsearch.Client( {
-            host:'host.docker.internal:9200'
+            host:Constants.ELASTIC_HOST
         }) 
     }
     /**
@@ -28,7 +28,7 @@ export class elasticController{
     /**
      * Asks elastic' index for the tags included in the level requested
      */
-    public getTags(minlvl,maxlvl)
+    public getTags(fromLevel : number, toLevel : number)
     {   
         
         let promise = new Promise((resolve, reject)=>
@@ -75,10 +75,10 @@ export class elasticController{
                     this.log.error(error)
                 }
                 tags = resp
-                let max =tags.aggregations.max_palabra.value+1;
-                let min =  tags.aggregations.min_palabra.value;
-                let levelmin = ((minlvl-1)*((max-min)/10))+min
-                let levelmax = ((maxlvl)*(max-min)/10)+min
+                let maxCount  = tags.aggregations.max_palabra.value+1;
+                let minCount  = tags.aggregations.min_palabra.value;
+                let fromCount = ((10 - fromLevel) * ((maxCount - minCount) / 10)) + minCount
+                let toCount   = ((11 - toLevel) * ((maxCount - minCount) / 10)) + minCount
                 
                 this.client.search({
                     size:0,
@@ -99,10 +99,10 @@ export class elasticController{
                                             
                                             "script" :{
                                                 "params": {
-                                                    "levelmin":levelmin,
-                                                    "levelmax":levelmax
+                                                    "from": fromCount,
+                                                    "to"  : toCount
                                                   },
-                                                "source": "params.cuenta>=params.levelmin && params.cuenta<params.levelmax"
+                                                "source": "params.cuenta>=params.from && params.cuenta<params.to"
                                             }
                                         }
                                     }
@@ -111,12 +111,12 @@ export class elasticController{
                         }
                     }
                 }).then((resultados)=>
-                    {       
-                        
-                        
-                        resolve(resultados.aggregations.palabras_count.buckets)
-                        
-                    })
+                {     
+                    console.log("nivel mínimo: "+(11 - fromLevel)+", límite inferior: "+fromCount);
+                    console.log("nivel máximo: "+(11 - toLevel)+", límite superior: "+toCount);
+                    
+                    resolve(resultados.aggregations.palabras_count.buckets)
+                })
             })
         })
 

@@ -26,6 +26,46 @@ export class DataController{
         }
         return this.instance 
     }
+
+    public async getArticles(minLevel,maxLevel)
+    {    let promise = new Promise((resolve,reject)=>
+     {
+ 
+         if(!maxLevel)
+         {
+             maxLevel = minLevel;
+         }
+         Cache.getInstance().redisGet(String(minLevel)+String(maxLevel)).then(existe=>
+             {
+                 if(existe)
+                 {
+                     this.log.info("Accedió al cache")
+                     resolve(existe);
+                 }
+                 else{
+                     this.log.info("No existía en cache")
+                     elasticController.getInstance().getTags(minLevel,maxLevel).then(tags =>
+                     {   
+                         let hashtags =Object.keys(tags).map((key)=>tags[key]['key'])
+                         
+                         if(hashtags.length==0)
+                         {
+                             resolve("No existe")
+                         }
+                         this.getArticlesFromDb(hashtags).then(articles =>
+                             {
+                                 Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),(JSON.stringify(JSON.parse(JSON.stringify(articles)))))
+                                 resolve(articles)
+                             })
+     
+                     })
+                 }
+             })
+ 
+     }) 
+     return promise       
+    }
+
     /**
      * Gets all the articles mathing the provided tags in the 2 databases implemented
      * @param tags 
@@ -34,11 +74,12 @@ export class DataController{
     {
         let promiseDbs = new Promise((resolve, reject) => {
 
+            /*
             let mongooseArticles =  MongooseController.getInstance().getArticlesByTag(tags)
-            let sqlArticles = SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
+            SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
             {
                 let mergeResults =   mongooseArticles.then(mongos=>{
-                    if((mongos.length!=0) && (sqlresult.lenght!=0))
+                    if((mongos.length != 0) && (sqlresult.lenght != 0))
                     {
                         resolve(sqlresult.concat(mongos))
                     }
@@ -56,56 +97,24 @@ export class DataController{
                     }
                   
                 }) ;
-                
             })
+            */
+
+           SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
+           {
+            if (sqlresult.lenght!=0){
+                resolve(sqlresult)
+            }
+            else{
+                resolve("No hay resultados")                
+            }
+
+           }) ;
 
         })
 
         return promiseDbs
     }
-   public async getArticles(minLevel,maxLevel)
-   {    let promise = new Promise((resolve,reject)=>
-    {
 
-        if(!maxLevel)
-        {
-            maxLevel = minLevel;
-        }
-        Cache.getInstance().redisGet(String(minLevel)+String(maxLevel)).then(existe=>
-            {
-                if(existe)
-                {
-                    resolve(existe);
-                }
-                else{
-                    this.log.info("No existía en cache")
-                    let MinMaxTags = elasticController.getInstance().getTags(minLevel,maxLevel).then(tags =>
-                        {   
-                            
-                            let hashtags =Object.keys(tags).map((key)=>tags[key]['key'])
-                            
-                            if(hashtags.length==0)
-                            {
-                                resolve("No existe")
-                            }
-                            this.getArticlesFromDb(hashtags).then(articles =>
-                                {
-                                    Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),(JSON.stringify(JSON.parse(JSON.stringify(articles)))))
-                                    resolve(articles)
-                                })
-        
-                        })
-                    
-                    
-        
-                }
-            })
-
-    }) 
-    return promise       
-
-
-
-   }
 
 }
