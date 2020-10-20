@@ -1,9 +1,9 @@
 import App from './app';
 import * as http from 'http';
-import { Logger } from './common';
+import { Logger, Constants } from './common';
 import { SqlController } from './controllers'
 
-const port = 3070;
+const port = Constants.SERVER_PORT;
 const logger = new Logger();
 
     App.set('port', port);

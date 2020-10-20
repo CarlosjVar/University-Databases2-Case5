@@ -1,16 +1,19 @@
 
 import { Tedis } from "tedis" 
 import { Constants } from '../index'
+import { Logger } from "../logger/logger"
 
 export class Cache {
   private static instance: Cache 
   public tedisCache : Tedis 
+  private logger : Logger
 
   private constructor() {
     this.tedisCache = new Tedis({
       port: Constants.CACHE_PORT,
       host: Constants.CACHE_HOST
     }) 
+    this.logger = new Logger()
   }
 
   public static getInstance(): Cache {
@@ -24,16 +27,18 @@ export class Cache {
 
     let promise = new Promise((resolve,reject)=>
     {
-      this.tedisCache.exists(key).then(val=>{
-        if(val==0)
+      this.tedisCache.exists(key).then(response=>{
+        if(response == 0)
         {
-          console.log("No existe");
-          
+          this.logger.info(Constants.NO_CACHE_RESULT)
           resolve(null);
         }
         else
         {
-          resolve ((this.tedisCache).get(`${key}`).then(value=>{return JSON.parse(String(value))}));
+          resolve ((this.tedisCache).get(`${key}`).then(value=>{
+            this.logger.info(Constants.SUCCESSFULL_CACHE_SEARCH)
+            return JSON.parse(String(value))
+          }));
         }
       });
      
@@ -46,7 +51,7 @@ export class Cache {
   // Se podría meter a un try-catch para ver que esté funcionando
   public async redisSet(key: string, value){
     (await this.tedisCache).set(key, value) 
-    this.tedisCache.pexpire(key,6000*10*5)
+    this.tedisCache.pexpire(key,Constants.CACHE_EXPIRE_TIME)
   }
 
 }

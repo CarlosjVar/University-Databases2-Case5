@@ -1,7 +1,7 @@
-import {MongooseController} from './mongooseConnection'
+import {MongooseController} from './mongooseController'
 import {SqlController}  from '../controllers'
-import {Logger,Article} from '../common'
-import {elasticController} from './elasticConnection'
+import {Logger, Constants} from '../common'
+import {elasticController} from './elasticController'
 import {Cache} from '../common'
 /**
  * Class made to implement database agnosticism
@@ -27,7 +27,7 @@ export class DataController{
         return this.instance 
     }
 
-    public async getArticles(minLevel,maxLevel)
+    public async getArticles(minLevel, maxLevel)
     {    let promise = new Promise((resolve,reject)=>
      {
  
@@ -39,24 +39,24 @@ export class DataController{
              {
                  if(existe)
                  {
-                     this.log.info("Accedió al cache")
                      resolve(existe);
                  }
                  else{
-                     this.log.info("No existía en cache")
                      elasticController.getInstance().getTags(minLevel,maxLevel).then(tags =>
                      {   
                          let hashtags =Object.keys(tags).map((key)=>tags[key]['key'])
                          
-                         if(hashtags.length==0)
+                         if(hashtags.length == 0)
                          {
-                             resolve("No existe")
+                            resolve(Constants.NO_ELASTIC_RESULTS)
                          }
-                         this.getArticlesFromDb(hashtags).then(articles =>
-                             {
-                                 Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),(JSON.stringify(JSON.parse(JSON.stringify(articles)))))
-                                 resolve(articles)
-                             })
+                         else{
+                            this.getArticlesFromDb(hashtags).then(articles =>
+                            {
+                                Cache.getInstance().redisSet(String(minLevel)+String(maxLevel),(JSON.stringify(JSON.parse(JSON.stringify(articles)))))
+                                resolve(articles)
+                            })
+                         }
      
                      })
                  }
@@ -70,7 +70,7 @@ export class DataController{
      * Gets all the articles mathing the provided tags in the 2 databases implemented
      * @param tags 
      */
-    public getArticlesFromDb(tags:Array<String>)
+    public getArticlesFromDb(tags : Array<String>)
     {
         let promiseDbs = new Promise((resolve, reject) => {
 
@@ -93,7 +93,7 @@ export class DataController{
                     }
                     else
                     {
-                        resolve("No hay resultados")
+                        resolve(Constants.NO_DB_RESULTS)
                     }
                   
                 }) ;
@@ -102,13 +102,12 @@ export class DataController{
 
            SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
            {
-            if (sqlresult.lenght!=0){
-                resolve(sqlresult)
-            }
-            else{
-                resolve("No hay resultados")                
-            }
-
+                if (sqlresult.lenght!=0){
+                    resolve(sqlresult)
+                }
+                else{
+                    resolve(Constants.NO_DB_RESULTS)                
+                }
            }) ;
 
         })

@@ -37,7 +37,7 @@ export class SqlController{
                 logger.error(err) 
             }
             else{
-                logger.info(Constants.DBCONNECTION_STABLISHED_MESSAGE)
+                logger.info(Constants.SQLCONNECTION_STABLISHED_MESSAGE)
             }
 
             connection.callProcedure(request)

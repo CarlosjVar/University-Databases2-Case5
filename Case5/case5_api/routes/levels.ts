@@ -13,7 +13,7 @@ const app = express()
 app.get('/get/:from/:to?', async (req, res) => {
 
   
-    logger.info(`level ranges`) 
+    logger.info(`level ranges => params: ${req.params.from} | ${req.params.to}`) 
     DataController.getInstance().getArticles(req.params.from,req.params.to).then(articles=>
     {
       res.json(articles)

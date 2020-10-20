@@ -77,8 +77,10 @@ export class elasticController{
                 tags = resp
                 let maxCount  = tags.aggregations.max_palabra.value+1;
                 let minCount  = tags.aggregations.min_palabra.value;
-                let fromCount = ((10 - fromLevel) * ((maxCount - minCount) / 10)) + minCount
-                let toCount   = ((11 - toLevel) * ((maxCount - minCount) / 10)) + minCount
+                let invertedFrom = 11 - fromLevel
+                let invertetTo = 11 - toLevel
+                let toCount = (invertedFrom * ((maxCount - minCount) / 10)) + minCount
+                let fromCount   = ((invertetTo - 1)   * ((maxCount - minCount) / 10)) + minCount
                 
                 this.client.search({
                     size:0,
@@ -111,10 +113,8 @@ export class elasticController{
                         }
                     }
                 }).then((resultados)=>
-                {     
-                    console.log("nivel mínimo: "+(11 - fromLevel)+", límite inferior: "+fromCount);
-                    console.log("nivel máximo: "+(11 - toLevel)+", límite superior: "+toCount);
-                    
+                {                         
+                    this.log.info(resultados.aggregations.palabras_count.buckets)
                     resolve(resultados.aggregations.palabras_count.buckets)
                 })
             })
