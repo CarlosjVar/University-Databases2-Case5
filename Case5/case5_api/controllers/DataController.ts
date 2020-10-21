@@ -74,41 +74,15 @@ export class DataController{
     {
         let promiseDbs = new Promise((resolve, reject) => {
 
-            /*
+            
             let mongooseArticles =  MongooseController.getInstance().getArticlesByTag(tags)
             SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
             {
                 let mergeResults =   mongooseArticles.then(mongos=>{
-                    if((mongos.length != 0) && (sqlresult.lenght != 0))
-                    {
                         resolve(sqlresult.concat(mongos))
-                    }
-                    else if (mongos.length != 0)
-                    {
-                        resolve(mongos)
-                    }
-                    else if (sqlresult.lenght!=0)
-                    {
-                        resolve(sqlresult)
-                    }
-                    else
-                    {
-                        resolve(Constants.NO_DB_RESULTS)
-                    }
-                  
                 }) ;
             })
-            */
-
-           SqlController.getInstance().getArticles(tags,(err,sqlresult)=>
-           {
-                if (sqlresult.lenght!=0){
-                    resolve(sqlresult)
-                }
-                else{
-                    resolve(Constants.NO_DB_RESULTS)                
-                }
-           }) ;
+            
 
         })
 

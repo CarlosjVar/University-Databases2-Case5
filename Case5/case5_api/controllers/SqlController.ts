@@ -74,11 +74,8 @@ export class SqlController{
             if (err) {
                 callback(err);
             } else {
-                if (rowCount < 1) {
-                    callback(null, false);
-                } else {
-                    callback(null, constructedArticles);
-                }
+                callback(null, constructedArticles);
+                
         }})
         
         // add parameters to request
